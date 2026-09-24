@@ -1,0 +1,12 @@
+<!-- علامة رُمّان: ثمرة بثلاث حبّات. تُستخدم كأيقونة تطبيق وصورة مشاركة. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="رُمّان">
+  <rect width="512" height="512" rx="120" fill="#E0264C"/>
+  <path d="M256 148c74 0 118 54 118 124 0 71-51 128-118 128s-118-57-118-128c0-70 44-124 118-124Z"
+        fill="none" stroke="#FFF9F5" stroke-width="26"/>
+  <path d="M256 148V96" fill="none" stroke="#FFB020" stroke-width="26" stroke-linecap="round"/>
+  <path d="M256 96c26-22 58-18 72-11-7 24-38 34-72 11Z"
+        fill="none" stroke="#FFB020" stroke-width="26" stroke-linejoin="round"/>
+  <circle cx="212" cy="258" r="20" fill="#FFF9F5"/>
+  <circle cx="300" cy="258" r="20" fill="#FFF9F5"/>
+  <circle cx="256" cy="326" r="20" fill="#FFF9F5"/>
+</svg>

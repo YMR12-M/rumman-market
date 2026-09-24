@@ -1,0 +1,30 @@
+{
+  "name": "rumman-market",
+  "version": "1.0.0",
+  "private": true,
+  "description": "رُمّان | RUMMAN — منصة سوبر ماركت متعدّدة الفروع (React + Node + MySQL)",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "install:all": "npm install --workspaces --include-workspace-root",
+    "db:migrate": "npm run db:migrate -w server",
+    "db:bootstrap": "npm run db:bootstrap -w server",
+    "db:setup": "npm run db:setup -w server",
+    "dev:server": "npm run dev -w server",
+    "dev:client": "npm run dev -w client",
+    "dev": "concurrently -n \"API,WEB\" -c \"magenta,yellow\" \"npm:dev:server\" \"npm:dev:client\"",
+    "build": "npm run build -w client",
+    "start": "npm run start -w server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "engines": {
+    "node": ">=18.18"
+  },
+  "overrides": {
+    "qs": "^6.16.0"
+  }
+}

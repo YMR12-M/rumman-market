@@ -1,0 +1,11 @@
+# رُمّان · RUMMAN
+User-agent: *
+Allow: /
+
+# صفحات خاصة بالعميل لا قيمة لأرشفتها
+Disallow: /account
+Disallow: /checkout
+Disallow: /cart
+Disallow: /admin
+
+Sitemap: https://rumman.market/sitemap.xml

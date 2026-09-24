@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#14060E" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#FFFBF7" media="(prefers-color-scheme: light)" />
+
+    <title>رُمّان · RUMMAN — مليانة بالخير</title>
+    <meta name="description" content="رُمّان سوبر ماركت: خضار وفاكهة تُقطف فجرًا، قصّاب ومخبز ومحمصة داخل المتجر، وتوصيل في نفس اليوم إلى باب بيتك." />
+
+    <meta property="og:title" content="رُمّان · RUMMAN" />
+    <meta property="og:description" content="مليانة بالخير — سوبر ماركت بمعايير المائدة التي تستحقّ الأفضل." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ar_EG" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- أيقونة البراند: رمّانة بحبّاتها الثلاث على أساس خمريّ ليلي -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%2314060E'/%3E%3Cpath d='M16 9c4.4 0 7 3.2 7 7.4 0 4.2-3 7.6-7 7.6s-7-3.4-7-7.6C9 12.2 11.6 9 16 9Z' fill='none' stroke='%23D81E4A' stroke-width='1.9'/%3E%3Cpath d='M16 9V6m0 0c1.6-1.2 3.4-1 4.2-.6-.4 1.4-2.2 2-4.2.6Z' fill='none' stroke='%23E3B341' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='13.4' cy='15.4' r='1.2' fill='%23E3B341'/%3E%3Ccircle cx='18.6' cy='15.4' r='1.2' fill='%23E3B341'/%3E%3Ccircle cx='16' cy='19.2' r='1.2' fill='%23E3B341'/%3E%3C/svg%3E" />
+
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/brand-mark.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <script>
+      /* استرجاع الوضع الليلي قبل أول رسم — يمنع ومضة الخلفية الفاتحة */
+      (function () {
+        try {
+          var saved = localStorage.getItem('rumman:theme');
+          var theme = saved ? JSON.parse(saved) : null;
+          if (theme !== 'light' && theme !== 'dark') {
+            theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) { /* التخزين محجوب — نكمل بالوضع الفاتح */ }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

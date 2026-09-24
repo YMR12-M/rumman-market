@@ -1,0 +1,32 @@
+{
+  "name": "@rumman/server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "رُمّان API — Express + MySQL",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "db:migrate": "node src/database/migrate.js",
+    "db:bootstrap": "node src/database/bootstrap.js",
+    "db:setup": "node src/database/migrate.js && node src/database/bootstrap.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "compression": "^1.8.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.12.0",
+    "zod": "^3.24.1"
+  },
+  "engines": {
+    "node": ">=18.18"
+  }
+}

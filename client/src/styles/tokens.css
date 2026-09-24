@@ -1,0 +1,296 @@
+/* ═══════════════════════════════════════════════════════════════════
+   رُمّان · RUMMAN — توكنات التصميم
+   الهوية: «ياقوت ليلي + ذهب شمبانيا»
+
+   الفكرة: الرمّانة من الخارج قشرةٌ داكنة عميقة، ومن الداخل حبّاتٌ
+   ياقوتية تلمع. هويّتنا تعمل بنفس المنطق:
+     • الأسود الخمري والذهب الشمبانيا  →  الفخامة والرقيّ (الإطار)
+     • الياقوت الرمّاني وطيف الأقسام   →  الزهو والشبابيّة (المحتوى)
+
+   القاعدة الذهبية: الزهو يأتي من إشباع ألوان الأقسام لا من الخلفية.
+   الخلفية تبقى هادئة فاخرة، والألوان تنفجر داخل البطاقات والشارات.
+
+   قاعدة صارمة: لا تكتب لونًا أو مقاسًا صريحًا في أي ملف آخر.
+   المرجع الكامل في docs/BRAND.md
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  color-scheme: light;
+
+  /* ═══ 1) الياقوت الرمّاني — قلب الهوية ═══════════════════════ */
+  --ruby-50:   #FFF1F4;
+  --ruby-100:  #FFE0E7;
+  --ruby-200:  #FFC2D0;
+  --ruby-300:  #FA8FA9;
+  --ruby-400:  #EE5578;
+  --ruby-500:  #D81E4A;   /* ← اللون الأساسي */
+  --ruby-600:  #B81440;
+  --ruby-700:  #7B0C28;   /* ← العنّابي العميق */
+  --ruby-800:  #55071B;
+  --ruby-900:  #2E0310;
+
+  /* ═══ 2) ذهب الشمبانيا — لمسة الفخامة ═══════════════════════ */
+  /* يُستخدم بخِسّة مقصودة: الحدود، الخطوط الفاصلة، الشارات الفاخرة،
+     النصّ فوق الأسطح الداكنة. الذهب الكثير يصير رخيصًا. */
+  --gold-50:   #FDF7E7;
+  --gold-100:  #F9EDC9;
+  --gold-200:  #F2DC9B;
+  --gold-300:  #E9C86C;
+  --gold-400:  #E3B341;   /* ← الذهب الأساسي */
+  --gold-500:  #C89726;
+  --gold-600:  #A2771A;
+  --gold-700:  #755411;
+
+  /* ═══ 3) طيف الأقسام — هنا يعيش الزهو والشبابيّة ════════════ */
+  /* كل قسم يأخذ لونًا من هنا. مشبعة عمدًا لتنبض فوق العاجي والليلي. */
+  --emerald:   #17C077;   /* الطازج · الخضار والفاكهة · النجاح */
+  --emerald-deep: #0A7D4A;
+  --teal:      #14B8C4;   /* البارد · الأسماك · التوصيل */
+  --teal-deep: #0A7A84;
+  --violet:    #8B5CF6;   /* الشبابي · غير الغذائي · الولاء */
+  --violet-deep: #5B21B6;
+  --amber:     #F59E0B;   /* الدافئ · المخبز · التنبيهات */
+  --amber-deep: #B45309;
+  --coral:     #FB6E52;   /* الحيوي · الجاهز · الوجبات */
+  --coral-deep: #C2410C;
+  --azure:     #3B82F6;   /* الصافي · المنظّفات · المياه */
+  --azure-deep: #1D4ED8;
+  --lime:      #84CC16;   /* النابض · العضوي · الأعشاب */
+  --lime-deep: #4D7C0F;
+  --plum:      #C026D3;   /* الجريء · الحلويات · العروض */
+  --plum-deep: #86198F;
+
+  /* ═══ 4) المحايدات — حبرٌ خمريّ لا رمادي ════════════════════ */
+  /* الرمادي المحايد يقتل الدفء. محايداتنا مائلة للخمري بدرجة
+     لا تُلاحَظ واعية، لكنها تجعل كل الصفحة تبدو من عائلة واحدة. */
+  --ink-950:  #14060E;   /* ← الأساس الخمري شبه الأسود */
+  --ink-900:  #1F0C16;
+  --ink-800:  #2D1421;
+  --ink-700:  #432130;
+  --ink-600:  #5E3444;
+  --ink-500:  #7C4F5F;
+  --ink-400:  #9D7280;
+  --ink-300:  #C09BA6;
+  --ink-200:  #DEC6CE;
+  --ink-100:  #EFE2E7;
+  --ink-050:  #F8F0F3;
+
+  --ink-a16:  rgba(20, 6, 14, 0.16);
+  --ink-a12:  rgba(20, 6, 14, 0.12);
+  --ink-a08:  rgba(20, 6, 14, 0.08);
+  --ink-a04:  rgba(20, 6, 14, 0.04);
+
+  /* ═══ 5) الأسطح ═════════════════════════════════════════════ */
+  --ivory:     #FFFBF7;   /* العاجي الدافئ — خلفية الصفحة */
+  --porcelain: #FFFFFF;   /* البورسلين — البطاقات المرفوعة */
+  --linen:     #F7EFE9;   /* الكتّاني — الأقسام الغائرة */
+  --blush:     #FDF3F1;   /* لمسة وردية خفيفة للمساحات الخاصة */
+
+  /* ═══ 6) أدوار الواجهة (تتبدّل مع الوضع الليلي) ═════════════ */
+  --bg:            var(--ivory);
+  --bg-raised:     var(--porcelain);
+  --bg-sunken:     var(--linen);
+  --bg-inverse:    var(--ink-950);
+  --bg-overlay:    rgba(20, 6, 14, 0.58);
+
+  --text:          var(--ink-950);
+  --text-soft:     var(--ink-600);
+  --text-muted:    var(--ink-500);
+  --text-faint:    var(--ink-400);
+  --text-inverse:  var(--ivory);
+
+  --line:          var(--ink-a12);
+  --line-soft:     var(--ink-a04);
+  --line-strong:   var(--ink-a16);
+
+  --brand:         var(--ruby-500);
+  --brand-hover:   var(--ruby-600);
+  --brand-text:    var(--ruby-600);
+  --brand-deep:    var(--ruby-700);
+  --brand-tint:    var(--ruby-50);
+  --brand-tint-2:  var(--ruby-100);
+  --on-brand:      #FFFFFF;
+
+  --lux:           var(--gold-400);   /* دور «الفخامة» — لا تستدعِ الذهب مباشرة */
+  --lux-text:      var(--gold-600);
+  --lux-tint:      var(--gold-50);
+  --lux-line:      rgba(227, 179, 65, 0.42);
+  --on-lux:        var(--ink-950);
+
+  --success:       var(--emerald);
+  --success-text:  var(--emerald-deep);
+  --success-tint:  #E4FBF0;
+  --warn:          var(--amber);
+  --warn-text:     var(--amber-deep);
+  --warn-tint:     #FEF3DA;
+  --danger:        var(--ruby-500);
+  --danger-text:   var(--ruby-600);
+  --danger-tint:   var(--ruby-50);
+  --info:          var(--teal);
+  --info-text:     var(--teal-deep);
+  --info-tint:     #DEF7F9;
+
+  /* ═══ 7) التدرّجات — تُستخدم للأسطح البطلة فقط ══════════════ */
+  --grad-noir:  linear-gradient(155deg, #1F0C16 0%, #14060E 48%, #2E0310 100%);
+  --grad-ruby:  linear-gradient(135deg, var(--ruby-400) 0%, var(--ruby-500) 45%, var(--ruby-700) 100%);
+  --grad-lux:   linear-gradient(100deg, var(--gold-300) 0%, var(--gold-400) 42%, var(--gold-600) 100%);
+  --grad-dawn:  linear-gradient(150deg, #FFFBF7 0%, #FDF3F1 55%, #F7EFE9 100%);
+  /* بريق ذهبي يمرّ فوق الأسطح الداكنة — توقيع الفخامة عندنا */
+  --grad-sheen: linear-gradient(110deg,
+                  transparent 18%,
+                  rgba(227, 179, 65, 0.00) 34%,
+                  rgba(227, 179, 65, 0.28) 50%,
+                  rgba(227, 179, 65, 0.00) 66%,
+                  transparent 82%);
+
+  /* ═══ 8) الخطوط ═════════════════════════════════════════════ */
+  /* Readex Pro: عربية معاصرة بأطراف نظيفة وتوازن هندسي — تقرأ
+     فاخرةً في الأحجام الكبيرة وشبابيّةً في الأوزان المتوسطة.
+     IBM Plex Sans Arabic: نصوص طويلة محايدة مريحة للعين.
+     Space Grotesk: الأرقام والأسعار — شخصية حادّة حديثة. */
+  --font-display: 'Readex Pro', 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  --font-body:    'IBM Plex Sans Arabic', 'Readex Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-num:     'Space Grotesk', 'Readex Pro', ui-monospace, monospace;
+
+  /* سلّم أحجام بنسبة 1.25 — أوسع من السابق ليمنح العناوين حضورًا */
+  --t-2xs:  0.6875rem;
+  --t-xs:   0.78rem;
+  --t-sm:   0.875rem;
+  --t-base: 1rem;
+  --t-md:   1.2rem;
+  --t-lg:   1.5rem;
+  --t-xl:   1.9rem;
+  --t-2xl:  2.45rem;
+  --t-3xl:  3.15rem;
+  --t-4xl:  4.1rem;
+  --t-5xl:  5.4rem;
+
+  --lh-tight: 1.1;
+  --lh-snug:  1.36;
+  --lh-body:  1.75;
+
+  /* تقارب الحروف: العناوين الكبيرة تتقارب، الصغيرة تتباعد */
+  --tr-display: -0.03em;
+  --tr-tight:   -0.018em;
+  --tr-wide:    0.04em;
+  --tr-caps:    0.11em;
+
+  /* ═══ 9) المسافات (وحدة 4px) ════════════════════════════════ */
+  --s-1: 0.25rem;  --s-2: 0.5rem;   --s-3: 0.75rem;  --s-4: 1rem;
+  --s-5: 1.5rem;   --s-6: 2rem;     --s-7: 3rem;     --s-8: 4rem;
+  --s-9: 6rem;     --s-10: 8rem;    --s-11: 11rem;
+
+  /* ═══ 10) الأشكال ═══════════════════════════════════════════ */
+  /* أقلّ استدارةً من قبل: الاستدارة المفرطة تقرأ «لعبة» لا «فخامة».
+     نحتفظ بحوافّ سخيّة على الأسطح الكبيرة فقط. */
+  --r-xs:   6px;
+  --r-sm:   10px;
+  --r-md:   14px;
+  --r-lg:   20px;
+  --r-xl:   28px;
+  --r-2xl:  40px;
+  --r-pill: 999px;
+
+  /* ═══ 11) الارتفاع والظلال ══════════════════════════════════ */
+  /* ظلالنا خمريّة لا رمادية، ومزدوجة الطبقة: طبقة قريبة تحدّد
+     الحافّة وطبقة بعيدة تعطي العمق. */
+  --shadow-xs: 0 1px 2px rgba(20, 6, 14, 0.06);
+  --shadow-sm: 0 1px 2px rgba(20, 6, 14, 0.05), 0 4px 10px -4px rgba(20, 6, 14, 0.10);
+  --shadow-md: 0 2px 4px rgba(20, 6, 14, 0.05), 0 14px 32px -16px rgba(20, 6, 14, 0.24);
+  --shadow-lg: 0 4px 8px rgba(20, 6, 14, 0.06), 0 32px 64px -28px rgba(20, 6, 14, 0.34);
+  --shadow-xl: 0 8px 16px rgba(20, 6, 14, 0.08), 0 56px 96px -40px rgba(20, 6, 14, 0.42);
+
+  --shadow-brand: 0 10px 28px -12px rgba(216, 30, 74, 0.52);
+  --shadow-lux:   0 10px 30px -14px rgba(227, 179, 65, 0.62);
+  --shadow-inner: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+
+  /* حلقة تركيز موحّدة */
+  --ring: 0 0 0 3px rgba(216, 30, 74, 0.26);
+
+  /* ═══ 12) الحركة ════════════════════════════════════════════ */
+  --ease:      cubic-bezier(0.32, 0.72, 0.24, 1);
+  --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-pop:  cubic-bezier(0.34, 1.46, 0.48, 1);
+  --dur-fast:  150ms;
+  --dur-mid:   260ms;
+  --dur-slow:  460ms;
+  --dur-lazy:  760ms;
+
+  /* ═══ 13) القياسات ══════════════════════════════════════════ */
+  --container:        1340px;
+  --container-wide:   1560px;
+  --container-narrow: 800px;
+  --header-h:         78px;
+  --z-header: 100;
+  --z-drawer: 200;
+  --z-modal:  300;
+  --z-toast:  400;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   الوضع الليلي — هنا تبلغ الهوية ذروتها.
+   ليس «قلبًا للألوان» بل غرفةً أخرى: خمريّ عميق، ذهبٌ يلمع على
+   الحواف، وياقوتٌ أكثر سطوعًا ليبقى نابضًا فوق العتمة.
+   ═══════════════════════════════════════════════════════════════ */
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg:          #120510;
+  --bg-raised:   #1E0B18;
+  --bg-sunken:   #0B0209;
+  --bg-inverse:  var(--ivory);
+  --bg-overlay:  rgba(4, 1, 3, 0.74);
+
+  --text:        #FFF4F7;
+  --text-soft:   #DCC0CB;
+  --text-muted:  #B08F9D;
+  --text-faint:  #8A6B78;
+  --text-inverse: var(--ink-950);
+
+  --line:        rgba(255, 244, 247, 0.13);
+  --line-soft:   rgba(255, 244, 247, 0.06);
+  --line-strong: rgba(255, 244, 247, 0.20);
+
+  --brand:       var(--ruby-400);
+  --brand-hover: var(--ruby-300);
+  --brand-text:  var(--ruby-300);
+  --brand-deep:  var(--ruby-500);
+  --brand-tint:  rgba(216, 30, 74, 0.16);
+  --brand-tint-2: rgba(216, 30, 74, 0.26);
+
+  --lux:         var(--gold-300);
+  --lux-text:    var(--gold-300);
+  --lux-tint:    rgba(227, 179, 65, 0.14);
+  --lux-line:    rgba(233, 200, 108, 0.34);
+
+  --success-tint: rgba(23, 192, 119, 0.16);
+  --success-text: #4EE29E;
+  --warn-tint:    rgba(245, 158, 11, 0.16);
+  --warn-text:    #FBC55C;
+  --danger:       var(--ruby-400);
+  --danger-text:  #FF8FA6;
+  --danger-tint:  rgba(216, 30, 74, 0.16);
+  --info-tint:    rgba(20, 184, 196, 0.16);
+  --info-text:    #56D8E2;
+
+  --grad-dawn:  linear-gradient(150deg, #1E0B18 0%, #170717 55%, #0B0209 100%);
+  --grad-noir:  linear-gradient(155deg, #26101F 0%, #150611 48%, #2E0310 100%);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.55), 0 4px 10px -4px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.5), 0 14px 32px -16px rgba(0, 0, 0, 0.8);
+  --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.55), 0 32px 64px -28px rgba(0, 0, 0, 0.85);
+  --shadow-xl: 0 8px 16px rgba(0, 0, 0, 0.6), 0 56px 96px -40px rgba(0, 0, 0, 0.9);
+  --shadow-inner: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --ring: 0 0 0 3px rgba(238, 85, 120, 0.34);
+}
+
+/* من يفضّل تقليل الحركة يحصل على واجهة ساكنة تمامًا */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

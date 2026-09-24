@@ -1,0 +1,16 @@
+{
+  "name": "رُمّان · RUMMAN",
+  "short_name": "رُمّان",
+  "description": "سوبر ماركت رُمّان — مليانة بالخير. تسوّق من أقرب فرع إليك.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FFF9F5",
+  "theme_color": "#E0264C",
+  "categories": ["shopping", "food"],
+  "icons": [
+    { "src": "/brand-mark.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

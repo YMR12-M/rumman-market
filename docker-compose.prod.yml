@@ -1,0 +1,59 @@
+# ──────────────────────────────────────────────────────────────
+#  رُمّان — الإنتاج
+#
+#  يشغّل القاعدة والخادم فقط. الواجهة ملفات ثابتة يقدّمها Nginx من
+#  `client/dist` (راجع docs/DEPLOY.md) — لا داعي لحاوية لها.
+#
+#  الأسرار تُقرأ من ملف .env بجوار هذا الملف، ولا تُكتب هنا أبدًا.
+# ──────────────────────────────────────────────────────────────
+services:
+  mysql:
+    image: mysql:8.4
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?مطلوب}
+      MYSQL_DATABASE: ${DB_NAME:-rumman_market}
+      MYSQL_USER: ${DB_USER:?مطلوب}
+      MYSQL_PASSWORD: ${DB_PASSWORD:?مطلوب}
+      TZ: Africa/Cairo
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --default-time-zone=+02:00
+    volumes:
+      - rumman_db:/var/lib/mysql
+    # لا منفذ مكشوف للخارج — الخادم وحده يصل إليها عبر الشبكة الداخلية
+    networks: [rumman]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u${DB_USER}", "-p${DB_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  api:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      DB_HOST: mysql
+      DB_PORT: "3306"
+    volumes:
+      # الملفات المرفوعة تعيش خارج الحاوية — تبقى بعد كل إعادة بناء
+      - rumman_uploads:/app/server/uploads
+    # يُنشَر خلف Nginx، فنكشف المنفذ على الحلقة المحلّية فقط
+    ports:
+      - "127.0.0.1:4000:4000"
+    networks: [rumman]
+
+volumes:
+  rumman_db:
+  rumman_uploads:
+
+networks:
+  rumman:
