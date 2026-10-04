@@ -1,10 +1,14 @@
 import { IconPin, IconClock, IconTruck } from '@/lib/icons.jsx';
 import { money } from '@/lib/format.js';
 
-/** بطاقات مختصرة للفروع — النقر عليها يفتح محدّد الفرع */
+/**
+ * بطاقات الفروع كواجهات محلّات صغيرة: مظلّة مخطّطة فوق كل بطاقة،
+ * ولافتة «مفتوح/مغلق» معلّقة كالتي على الأبواب. النقر يفتح محدّد الفرع.
+ * حالة الفتح تأتي محسوبة من الخادم (is_open_now) — لا نخمّنها هنا.
+ */
 export default function BranchStrip({ branches, activeBranchId, onPick, limit = 4 }) {
   return (
-    <div className="cats" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))' }}>
+    <div className="cats branch-strip">
       {branches.slice(0, limit).map((branch, index) => (
         <button
           key={branch.id}
@@ -14,10 +18,18 @@ export default function BranchStrip({ branches, activeBranchId, onPick, limit = 
           onClick={onPick}
           style={{ textAlign: 'start' }}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 'var(--s-2)' }}>
-            <strong style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--t-md)' }}>{branch.name_ar}</strong>
+          <span className="branch-card__awning awning awning--sm" aria-hidden="true" />
+
+          <div className="branch-card__head">
+            <strong>{branch.name_ar}</strong>
             <span className="branch-card__code">{branch.code}</span>
           </div>
+
+          {typeof branch.is_open_now === 'boolean' && (
+            <span className={`door-sign ${branch.is_open_now ? 'is-open' : 'is-closed'}`}>
+              {branch.is_open_now ? 'مفتوح الآن' : 'مغلق الآن'}
+            </span>
+          )}
 
           <div className="branch-card__meta">
             <div><IconPin size={14} /> {branch.city}</div>

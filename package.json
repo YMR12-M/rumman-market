@@ -5,7 +5,8 @@
   "description": "رُمّان | RUMMAN — منصة سوبر ماركت متعدّدة الفروع (React + Node + MySQL)",
   "workspaces": [
     "server",
-    "client"
+    "client",
+    "mobile"
   ],
   "scripts": {
     "install:all": "npm install --workspaces --include-workspace-root",
@@ -14,8 +15,12 @@
     "db:setup": "npm run db:setup -w server",
     "dev:server": "npm run dev -w server",
     "dev:client": "npm run dev -w client",
+    "dev:mobile": "npm run dev -w mobile",
     "dev": "concurrently -n \"API,WEB\" -c \"magenta,yellow\" \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:all": "concurrently -n \"API,WEB,MOBILE\" -c \"magenta,yellow,cyan\" \"npm:dev:server\" \"npm:dev:client\" \"npm:dev:mobile\"",
     "build": "npm run build -w client",
+    "build:mobile": "npm run build -w mobile",
+    "check:shared": "npm run check:shared -w mobile",
     "start": "npm run start -w server"
   },
   "devDependencies": {

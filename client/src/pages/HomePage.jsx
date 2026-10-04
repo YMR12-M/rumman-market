@@ -63,17 +63,23 @@ export default function HomePage() {
         <PromoStrip promotions={promotions.data} />
       </section>
 
-      <section className="section--tight container">
-        <ProductRail
-          eyebrow="بسعر أفضل"
-          title="عروض هذا الأسبوع"
-          description="تخفيضات حقيقية على أصناف نبيعها طوال العام — لا أسعار مرفوعة ثم مخفّضة."
-          actionLabel="كل العروض"
-          actionTo="/offers"
-          products={deals.data?.items}
-          loading={deals.loading}
-        />
+      {/* شريط العروض: حقل أحمر بنقاط نصف تون وحواف مسنّنة — ذروة الصفحة */}
+      {(deals.loading || (deals.data?.items?.length ?? 0) > 0) && (
+      <section className="band band--red">
+        <div className="container">
+          <ProductRail
+            tone="dark"
+            eyebrow="بسعر أفضل"
+            title="عروض هذا الأسبوع"
+            description="تخفيضات حقيقية على أصناف نبيعها طوال العام — لا أسعار مرفوعة ثم مخفّضة."
+            actionLabel="كل العروض"
+            actionTo="/offers"
+            products={deals.data?.items}
+            loading={deals.loading}
+          />
+        </div>
       </section>
+      )}
 
       <section className="section section--sunken">
         <BrandStory />

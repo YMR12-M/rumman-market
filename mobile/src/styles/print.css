@@ -1,0 +1,425 @@
+/* ═══════════════════════════════════════════════════════════════════
+   لغة المطبوعات — الأشياء التي تُمسَك بيدٍ في السوبر ماركت
+   ظلّ صلب، حبر، ورق، أختام، ملصقات، مظلّة، إيصال.
+   كلها مبنية على التوكنز؛ لا لون صريح هنا إلا ما كان «ورقًا» أو «حبرًا».
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ═══ 1) رسومات الستيكرات ═════════════════════════════════════════
+   الطبقات معرّفة في lib/art.jsx. لون الرسمة = لون القسم (--cat-color). */
+.art {
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: visible;
+  --art-main: var(--cat-color, var(--ruby-500));
+  --art-ink: #1D0B15;      /* حبر ثابت: الرسمة ملصق مطبوع لا تتبدّل مع الوضع الليلي */
+  --art-paper: #FFF8E8;
+}
+/* لوحة الألوان الطبيعية: كل صنف يُطبع بألوان الطعام الحقيقية (الطماطم حمراء
+   مهما كان لون قسمها) بينما تبقى اللافتات والأوراق بلون القسم. */
+.art .rd  { fill: #D7283C; } .art .rdd { fill: #9E1426; } .art .rdl { fill: #F26B73; }
+.art .or  { fill: #F58A1F; } .art .ord { fill: #C25A06; } .art .orl { fill: #FFB75E; }
+.art .yl  { fill: #FFC833; } .art .yld { fill: #E3A00E; } .art .yll { fill: #FFE488; }
+.art .gn  { fill: #3FA45B; } .art .gnd { fill: #237A3E; } .art .gnl { fill: #A5D86E; }
+.art .bl  { fill: #3F7FD6; } .art .bld { fill: #2759A8; } .art .bll { fill: #A9CCF5; }
+.art .pk  { fill: #F28AA3; } .art .pkd { fill: #D4587A; } .art .pkl { fill: #FFC4D3; }
+.art .pu  { fill: #8A4FA0; } .art .pud { fill: #5B2D78; } .art .pul { fill: #D2A9E3; }
+.art .br  { fill: #8B5A3C; } .art .brd { fill: #5E3A22; } .art .brl { fill: #D9A66B; } .art .brx { fill: #EFCB92; }
+.art .cr  { fill: #FFF1CC; } .art .gy  { fill: #C9C2BC; } .art .gyd { fill: #8F8882; }
+/* أصناف قديمة تتبع لون القسم — محفوظة للاستخدامات المحايدة */
+.art .m { fill: var(--art-main); }
+.art .l { fill: color-mix(in srgb, var(--art-main) 42%, var(--art-paper)); }
+.art .d { fill: color-mix(in srgb, var(--art-main) 66%, var(--art-ink)); }
+.art .w { fill: var(--art-paper); }
+.art .k { fill: var(--art-ink); }
+.art .ol {
+  stroke: var(--art-ink);
+  stroke-width: 3.2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.art .ln {
+  fill: none;
+  stroke: var(--art-ink);
+  stroke-width: 2.4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* قصّ الستيكر: إطار عاجي حول الشكل كله + ظلّ صغير كأنه ملصق على ورقة */
+.die-cut {
+  filter:
+    drop-shadow(2.6px 0 0 #FFF8E8) drop-shadow(-2.6px 0 0 #FFF8E8)
+    drop-shadow(0 2.6px 0 #FFF8E8) drop-shadow(0 -2.6px 0 #FFF8E8)
+    drop-shadow(0 2px 2.5px rgba(29, 11, 21, 0.38));
+}
+
+/* ═══ 2) نجمة الخصم ═══════════════════════════════════════════════ */
+.burst {
+  --burst-bg: var(--brand);
+  --burst-ink: #fff;
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  inline-size: var(--burst, 72px);
+  block-size: var(--burst, 72px);
+  flex-shrink: 0;
+  transform: rotate(-9deg);
+  filter: drop-shadow(-2px 3px 0 var(--ink-950));
+}
+.burst svg {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  fill: var(--burst-bg);
+  stroke: var(--ink-950);
+  stroke-width: 2.6;
+  stroke-linejoin: round;
+}
+.burst__text {
+  position: relative;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: var(--burst-ink);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: calc(var(--burst, 72px) * 0.19);
+  line-height: 1.05;
+}
+.burst__text b {
+  display: block;
+  font-family: var(--font-price);
+  font-weight: 400;
+  font-size: 1.9em;
+  line-height: 0.95;
+}
+/* كلمة عربية داخل الختم لا رقم: Anton بلا حروف عربية، فنستعمل خطّ العناوين */
+.burst__text b.burst__word {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.02em;
+  line-height: 1.2;
+}
+.burst--sun  { --burst-bg: var(--gold-400); --burst-ink: var(--ink-950); }
+.burst--leaf { --burst-bg: var(--emerald); }
+.burst--ink  { --burst-bg: var(--ink-950); --burst-ink: #FFF8E8; }
+.burst--paper { --burst-bg: #FFF8E8; --burst-ink: var(--ink-950); }
+
+/* ═══ 3) المظلّة ══════════════════════════════════════════════════
+   شرائط أحمر وكريمي تنتهي بحدٍّ مسنّن مستدير — أيقونة المحلّ في كل
+   ثقافة. تُرسم بتدرّج مكرّر + قناع نصف دوائر، فلا صورة ولا SVG. */
+.awning {
+  --aw: var(--awning-w);
+  --ah: calc(var(--aw) / 2);
+  position: relative;
+  block-size: calc(var(--aw) * 0.46 + var(--ah));
+  background: repeating-linear-gradient(90deg,
+    var(--awning-a) 0 var(--aw), var(--awning-b) var(--aw) calc(var(--aw) * 2));
+  -webkit-mask:
+    linear-gradient(#000 0 0) top / 100% calc(var(--aw) * 0.46) no-repeat,
+    radial-gradient(circle at 50% 0, #000 calc(var(--ah) - 0.5px), transparent var(--ah)) bottom / var(--aw) var(--ah) repeat-x;
+          mask:
+    linear-gradient(#000 0 0) top / 100% calc(var(--aw) * 0.46) no-repeat,
+    radial-gradient(circle at 50% 0, #000 calc(var(--ah) - 0.5px), transparent var(--ah)) bottom / var(--aw) var(--ah) repeat-x;
+  pointer-events: none;
+}
+/* خطّ حبر رفيع أعلى المظلّة يمنحها ثقلًا مطبوعًا */
+.awning::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: 3px;
+  background: var(--ink-950);
+}
+.awning--sm { --aw: 18px; }
+.awning--lg { --aw: 40px; }
+
+/* ═══ 4) شريط الأخبار ══════════════════════════════════════════════ */
+.ticker {
+  overflow: hidden;
+  background: var(--grad-noir);
+  color: var(--ivory);
+}
+.ticker__track {
+  display: flex;
+  inline-size: max-content;
+  direction: ltr;               /* الحركة نحو اليسار تقرأ بترتيب العربية */
+  animation: ticker 60s linear infinite;
+}
+.ticker:hover .ticker__track { animation-play-state: paused; }
+.ticker__item {
+  direction: rtl;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  padding-inline: 1.6em;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--t-xs);
+}
+.ticker__item svg { color: var(--gold-400); flex-shrink: 0; }
+@keyframes ticker { to { transform: translateX(-50%); } }
+
+/* ═══ 5) اللافتة المعدنية (لافتة الممرّ) ═══════════════════════════
+   لوحة ملوّنة بحدّ حبر، وحدّ داخلي رفيع كطلاء المينا، ومسمارَان. */
+.sign {
+  --sign-bg: var(--cat-color, var(--brand));
+  --sign-ink: var(--cat-ink, #fff);
+  position: relative;
+  isolation: isolate;
+  background: var(--sign-bg);
+  color: var(--sign-ink);
+  border: var(--bw) solid var(--rule);
+  border-radius: var(--r-md);
+  box-shadow: var(--hard);
+}
+.sign::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  z-index: -1;
+  border: 1.5px solid color-mix(in srgb, var(--sign-ink) 55%, transparent);
+  border-radius: calc(var(--r-md) - 3px);
+  pointer-events: none;
+}
+.sign__screw {
+  position: absolute;
+  inline-size: 7px;
+  block-size: 7px;
+  border-radius: 50%;
+  background: #FFF8E8;
+  border: 1.5px solid var(--ink-950);
+}
+.sign__screw::after {
+  content: '';
+  position: absolute;
+  inset: 1.2px 0.4px;
+  border-block-start: 1px solid var(--ink-950);
+  transform: rotate(35deg);
+}
+.sign__screw--tl { inset-block-start: 9px; inset-inline-start: 9px; }
+.sign__screw--tr { inset-block-start: 9px; inset-inline-end: 9px; }
+
+/* ═══ 6) الختم ═════════════════════════════════════════════════════
+   حبرٌ يُطبع بميل خفيف. mix-blend-mode: multiply يجعله ينفذ في الورق. */
+.stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.14em 0.7em 0.22em;
+  color: var(--brand);
+  border: 2.5px solid currentColor;
+  border-radius: var(--r-sm);
+  outline: 1.5px solid currentColor;
+  outline-offset: 2px;
+  font-family: var(--font-display);
+  font-size: var(--t-sm);
+  font-weight: 900;
+  line-height: 1.3;
+  transform: rotate(-6deg);
+  background: transparent;
+  mix-blend-mode: multiply;
+  white-space: nowrap;
+}
+[data-theme='dark'] .stamp { mix-blend-mode: normal; }
+.stamp--leaf  { color: var(--emerald-deep); }
+.stamp--ink   { color: var(--ink-950); }
+.stamp--sun   { color: var(--gold-600); }
+.stamp--round { border-radius: var(--r-pill); }
+
+/* ═══ 7) بطاقة السعر المثقوبة ══════════════════════════════════════ */
+.tag {
+  position: relative;
+  background: var(--card);
+  border: var(--bw) solid var(--rule);
+  border-radius: var(--r-sm) var(--r-sm) var(--r-sm) var(--r-xl);
+  box-shadow: var(--hard-sm);
+}
+.tag::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 9px;
+  inset-inline-start: 11px;
+  inline-size: 9px;
+  block-size: 9px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1.5px solid var(--rule);
+  box-shadow: inset 1px 1px 0 rgba(29, 11, 21, 0.25);
+}
+
+/* ═══ 8) حواف ورقية ════════════════════════════════════════════════
+   مسنّنة (إيصال)، ومموّجة، ومتعرّجة. تُطبَّق كأقنعة على حافة العنصر. */
+.edge-zig-b {
+  --z: 9px;
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(var(--z) * 2) 100%;
+          mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(var(--z) * 2) 100%;
+  padding-block-end: var(--z);
+}
+.edge-zig-t {
+  --z: 9px;
+  -webkit-mask: conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(var(--z) * 2) 100%;
+          mask: conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(var(--z) * 2) 100%;
+  padding-block-start: var(--z);
+}
+.edge-wave-b {
+  --wr: 12px;
+  -webkit-mask: radial-gradient(var(--wr) at 50% 100%, #0000 98%, #000) 50% 0 / calc(var(--wr) * 2) 100%;
+          mask: radial-gradient(var(--wr) at 50% 100%, #0000 98%, #000) 50% 0 / calc(var(--wr) * 2) 100%;
+}
+
+/* ═══ 9) نصف التون والخطوط ═════════════════════════════════════════ */
+.halftone {
+  background-image: radial-gradient(var(--dot, currentColor) 1.3px, transparent 1.7px);
+  background-size: 9px 9px;
+}
+.stripes {
+  background-image: repeating-linear-gradient(-45deg, var(--dot, currentColor) 0 2px, transparent 2px 9px);
+}
+.gridpaper {
+  background-image:
+    linear-gradient(var(--dot, currentColor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--dot, currentColor) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+/* خطّ تقطيع (للقصّ) */
+.perf {
+  border: 0;
+  border-block-start: 2px dashed var(--line-strong);
+  margin: 0;
+}
+
+/* خطّ الإيصال: اسم ...... سعر */
+.leader {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+}
+.leader::after {
+  content: '';
+  order: 1;
+  flex: 1;
+  border-block-end: 2px dotted var(--line-strong);
+  transform: translateY(-0.28em);
+}
+.leader > :first-child { order: 0; }
+.leader > :last-child { order: 2; }
+
+/* باركود زخرفي */
+.barcode {
+  block-size: 38px;
+  background: repeating-linear-gradient(90deg,
+    var(--ink-950) 0 2px, transparent 2px 4px, var(--ink-950) 4px 5px, transparent 5px 8px,
+    var(--ink-950) 8px 11px, transparent 11px 12px, var(--ink-950) 12px 13px, transparent 13px 16px,
+    var(--ink-950) 16px 18px, transparent 18px 21px);
+}
+
+/* ═══ 10) الإيصال ═════════════════════════════════════════════════
+   غلاف يحمل الظلّ الصلب + ورقة بحافّة سفلية مسنّنة. الفصل ضروري لأن
+   القناع يقصّ كل ما يخرج عن الصندوق ومنه الظلّ. */
+.receipt {
+  position: relative;
+  filter: drop-shadow(-4px 5px 0 var(--ink-950));
+}
+[data-theme='dark'] .receipt { filter: drop-shadow(-4px 5px 0 rgba(0, 0, 0, 0.9)); }
+.receipt__paper {
+  --z: 9px;
+  background: #FFFEF7;
+  color: #1D0B15;
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  padding: var(--s-5) var(--s-5) calc(var(--s-5) + var(--z));
+  -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(var(--z) * 2) 100%;
+          mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(var(--z) * 2) 100%;
+}
+.receipt__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--t-xl);
+  text-align: center;
+  line-height: 1.25;
+}
+.receipt__sub { text-align: center; font-size: var(--t-xs); opacity: 0.7; }
+.receipt hr {
+  border: 0;
+  border-block-start: 2px dashed rgba(29, 11, 21, 0.4);
+  margin: var(--s-4) 0;
+}
+.receipt .leader { font-size: var(--t-sm); padding-block: 1px; }
+.receipt .leader::after { border-block-end-color: rgba(29, 11, 21, 0.38); }
+.receipt .leader > :last-child { font-weight: 700; }
+.receipt .leader--total { font-size: var(--t-md); font-weight: 700; }
+.receipt .leader--total > :first-child { font-family: var(--font-display); font-weight: 900; }
+.receipt .leader--total > :last-child { font-family: var(--font-price); font-weight: 400; font-size: 2rem; letter-spacing: 0.01em; line-height: 1; }
+.receipt .muted { color: rgba(29, 11, 21, 0.62); }
+.receipt .numeral { font-family: var(--font-mono); font-weight: 700; }
+.receipt__thanks {
+  margin-top: var(--s-4);
+  text-align: center;
+  font-family: var(--font-hand);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ruby-600);
+  line-height: 1.3;
+}
+.receipt .barcode { margin-top: var(--s-3); }
+.receipt .input { background: #fff; border-color: #1D0B15; }
+
+/* ═══ 11) الحبل والبطاقات المعلّقة ═════════════════════════════════
+   خيطٌ مشدود تتدلّى منه بطاقات صغيرة كلٌّ بميلها — تتأرجح عند المرور. */
+.rope {
+  position: relative;
+  padding-block-start: 22px;
+}
+.rope::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 6px;
+  inset-inline: -12px;
+  block-size: 2.5px;
+  background: repeating-linear-gradient(90deg, var(--kraft-dark) 0 6px, var(--kraft) 6px 12px);
+  border-radius: 2px;
+  box-shadow: 0 2px 0 rgba(29, 11, 21, 0.18);
+}
+.hang {
+  position: relative;
+  transform-origin: 50% -16px;
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform var(--dur-slow) var(--ease-pop);
+}
+/* الخيط الصغير المربوط في الثقب (::after لتبقى ::before ثقب البطاقة) */
+.hang::after {
+  content: '';
+  position: absolute;
+  inset-block-start: -20px;
+  left: 50%;
+  margin-left: -1px;
+  inline-size: 2px;
+  block-size: 24px;
+  background: var(--kraft-dark);
+}
+.hang:hover { animation: sway 1.1s var(--ease) 1; }
+@keyframes sway {
+  0%   { transform: rotate(var(--tilt, 0deg)); }
+  25%  { transform: rotate(calc(var(--tilt, 0deg) + 4deg)); }
+  55%  { transform: rotate(calc(var(--tilt, 0deg) - 3deg)); }
+  80%  { transform: rotate(calc(var(--tilt, 0deg) + 1.2deg)); }
+  100% { transform: rotate(var(--tilt, 0deg)); }
+}
+
+/* شريط لاصق (واشي) لتثبيت الملاحظات على الورق */
+.tape {
+  position: absolute;
+  inline-size: 84px;
+  block-size: 26px;
+  background: color-mix(in srgb, var(--gold-300) 78%, transparent);
+  border-inline: 2px dashed rgba(29, 11, 21, 0.14);
+  transform: rotate(var(--tape-tilt, -4deg));
+  box-shadow: 0 1px 2px rgba(29, 11, 21, 0.18);
+  mix-blend-mode: multiply;
+}

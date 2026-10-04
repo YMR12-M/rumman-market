@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- viewport-fit=cover يترك الهيكل يرسم تحت النتوء وشريط الإيماءات، ثم
+         نعيد الحشو من كل حافّة بـ env(safe-area-inset-*).
+         والتكبير بإصبعين غير معطّل عمدًا: تعطيله يحرم من يحتاج تكبير سعرٍ
+         أو اسمِ منتج. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#1B1216" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#FBF2DF" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- مثبّتًا على الشاشة الرئيسية يجب أن يبدو تطبيقًا لا تبويبًا في المتصفّح -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="رُمّان" />
+    <!-- iOS يحوّل الأرقام المجرّدة إلى روابط اتصال، فتفسد الأسعار وأرقام الطلبات -->
+    <meta name="format-detection" content="telephone=no" />
+
+    <title>رُمّان · RUMMAN</title>
+    <meta name="description" content="سوبر ماركت رُمّان — مليانة بالخير. تسوّق من أقرب فرع إليك." />
+
+    <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Kufam: العناوين والأزرار · عريف رقعة: ملاحظات اليد · Tajawal: النص
+         Anton: أرقام اللافتات والأسعار · Courier Prime: الإيصالات -->
+    <link href="https://fonts.googleapis.com/css2?family=Kufam:wght@400..900&family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@400;500;700;800&family=Anton&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+
+    <script>
+      /* استرجاع الوضع الليلي قبل أول رسم — يمنع ومضة الخلفية الفاتحة.
+         المفتاح نفسه الذي تستخدمه الواجهة المكتبية (rumman:theme). */
+      (function () {
+        try {
+          var saved = localStorage.getItem('rumman:theme');
+          var theme = saved ? JSON.parse(saved) : null;
+          if (theme !== 'light' && theme !== 'dark') {
+            theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) { /* التخزين محجوب — نكمل بالوضع الفاتح */ }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

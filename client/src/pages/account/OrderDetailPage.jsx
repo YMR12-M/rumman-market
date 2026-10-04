@@ -5,8 +5,9 @@ import EmptyState from '@/components/ui/EmptyState.jsx';
 import PaymentPanel from '@/components/account/PaymentPanel.jsx';
 import { Skeleton } from '@/components/ui/Skeleton.jsx';
 import {
-  IconCheck, IconChevronLeft, IconRefresh, IconTruck, IconStore, IconPhone, IconStar,
+  IconCheck, IconChevronLeft, IconRefresh, IconTruck, IconStore, IconPhone,
 } from '@/lib/icons.jsx';
+import { Aril } from '@/lib/art.jsx';
 import { orderService } from '@/services/index.js';
 import { useAsync } from '@/hooks/index.js';
 import { useCart } from '@/context/CartContext.jsx';
@@ -195,7 +196,7 @@ export default function OrderDetailPage() {
               <div style={{ display: 'flex', gap: 6, marginTop: 'var(--s-3)' }}>
                 {[1, 2, 3, 4, 5].map((value) => (
                   <button key={value} type="button" onClick={() => submitRating(value)} aria-label={`${value} نجوم`}>
-                    <IconStar size={26} filled={value <= rating} style={{ color: value <= rating ? 'var(--gold-400)' : 'var(--ink-300)' }} />
+                    <Aril size={24} color={value <= rating ? 'var(--ruby-500)' : 'var(--ink-200)'} />
                   </button>
                 ))}
               </div>
@@ -203,94 +204,101 @@ export default function OrderDetailPage() {
           )}
         </div>
 
-        {/* ملخّص جانبي */}
+        {/* ملخّص جانبي: إيصال الطلب */}
         <aside className="summary">
-          <div className="panel">
-            <h3 style={{ fontSize: 'var(--t-md)', marginBottom: 'var(--s-4)' }}>الملخّص المالي</h3>
+          <div className="receipt">
+            <div className="receipt__paper">
+              <div className="receipt__title">رُمّان</div>
+              <div className="receipt__sub">{data.branch_name} · <span className="numeral">{data.order_number}</span></div>
+              <hr />
 
-            <div className="summary__row"><span>المجموع الفرعي</span><span className="numeral">{money(data.subtotal)}</span></div>
-            {data.discount_total > 0 && (
-              <div className="summary__row summary__row--discount">
-                <span>خصم {data.coupon_code}</span><span className="numeral">−{money(data.discount_total)}</span>
-              </div>
-            )}
-            {data.points_redeemed > 0 && (
-              <div className="summary__row summary__row--discount">
-                <span>نقاط ({num(data.points_redeemed)})</span><span className="numeral">−{money(data.points_value)}</span>
-              </div>
-            )}
-            <div className="summary__row"><span>التوصيل</span><span className="numeral">{data.delivery_fee > 0 ? money(data.delivery_fee) : 'مجاني'}</span></div>
-            {data.tax_total > 0 && <div className="summary__row"><span>الضريبة</span><span className="numeral">{money(data.tax_total)}</span></div>}
-            <div className="summary__row summary__row--total"><span>الإجمالي</span><span className="numeral">{money(data.grand_total)}</span></div>
-
-            {data.points_earned > 0 && (
-              <p className="muted" style={{ fontSize: 'var(--t-xs)', marginTop: 'var(--s-2)' }}>
-                {data.status === 'delivered' ? 'كسبت' : 'ستكسب'} <strong className="numeral">{num(data.points_earned)}</strong> نقطة من هذا الطلب.
-              </p>
-            )}
-
-            <hr />
-
-            <dl style={{ display: 'grid', gap: 'var(--s-3)', fontSize: 'var(--t-sm)' }}>
-              <div>
-                <dt className="muted" style={{ fontSize: 'var(--t-xs)' }}>طريقة الاستلام</dt>
-                <dd style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
-                  {data.fulfillment_type === 'delivery' ? <IconTruck size={16} /> : <IconStore size={16} />}
-                  {data.fulfillment_type === 'delivery' ? 'توصيل' : 'استلام من الفرع'}
-                </dd>
+              <div className="leader"><span>المجموع الفرعي</span><span className="numeral">{money(data.subtotal)}</span></div>
+              {data.discount_total > 0 && (
+                <div className="leader"><span>خصم {data.coupon_code}</span><span className="numeral">−{money(data.discount_total)}</span></div>
+              )}
+              {data.points_redeemed > 0 && (
+                <div className="leader"><span>نقاط ({num(data.points_redeemed)})</span><span className="numeral">−{money(data.points_value)}</span></div>
+              )}
+              <div className="leader"><span>التوصيل</span><span className="numeral">{data.delivery_fee > 0 ? money(data.delivery_fee) : 'مجاني'}</span></div>
+              {data.tax_total > 0 && <div className="leader"><span>الضريبة</span><span className="numeral">{money(data.tax_total)}</span></div>}
+              <hr />
+              <div className="leader leader--total">
+                <span>الإجمالي</span>
+                <span>{money(data.grand_total).replace(' ج.م', '')} <small style={{ fontFamily: 'var(--font-display)', fontSize: '0.9rem' }}>ج.م</small></span>
               </div>
 
-              {data.slot_date && (
-                <div>
-                  <dt className="muted" style={{ fontSize: 'var(--t-xs)' }}>الموعد</dt>
-                  <dd style={{ margin: 0 }} className="numeral">
-                    {data.slot_date} · {String(data.slot_from).slice(0, 5)} — {String(data.slot_to).slice(0, 5)}
-                  </dd>
-                </div>
+              {data.points_earned > 0 && (
+                <p className="muted" style={{ fontSize: 'var(--t-xs)', marginTop: 'var(--s-2)' }}>
+                  {data.status === 'delivered' ? 'كسبت' : 'ستكسب'} <strong className="numeral">{num(data.points_earned)}</strong> نقطة من هذا الطلب.
+                </p>
               )}
 
-              <div>
-                <dt className="muted" style={{ fontSize: 'var(--t-xs)' }}>الدفع</dt>
-                <dd style={{ margin: 0 }}>
-                  {paymentLabel(data.payment_method)}
-                  {' · '}
-                  {(PAYMENT_STATUS_META[data.payment_status] ?? {}).label ?? data.payment_status}
-                </dd>
-              </div>
+              <hr />
 
-              {data.address && (
+              <dl style={{ display: 'grid', gap: 'var(--s-3)', fontSize: 'var(--t-sm)', margin: 0 }}>
                 <div>
-                  <dt className="muted" style={{ fontSize: 'var(--t-xs)' }}>العنوان</dt>
+                  <dt className="muted" style={{ fontSize: 'var(--t-xs)' }}>طريقة الاستلام</dt>
+                  <dd style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
+                    {data.fulfillment_type === 'delivery' ? <IconTruck size={16} /> : <IconStore size={16} />}
+                    {data.fulfillment_type === 'delivery' ? 'توصيل' : 'استلام من الفرع'}
+                  </dd>
+                </div>
+
+                {data.slot_date && (
+                  <div>
+                    <dt className="muted" style={{ fontSize: 'var(--t-xs)' }}>الموعد</dt>
+                    <dd style={{ margin: 0 }} className="numeral">
+                      {data.slot_date} · {String(data.slot_from).slice(0, 5)} — {String(data.slot_to).slice(0, 5)}
+                    </dd>
+                  </div>
+                )}
+
+                <div>
+                  <dt className="muted" style={{ fontSize: 'var(--t-xs)' }}>الدفع</dt>
                   <dd style={{ margin: 0 }}>
-                    {data.address.street}، {data.address.area || data.address.city}
-                    <br />{data.address.recipient_name} · <span className="numeral">{data.address.phone}</span>
+                    {paymentLabel(data.payment_method)}
+                    {' · '}
+                    {(PAYMENT_STATUS_META[data.payment_status] ?? {}).label ?? data.payment_status}
                   </dd>
                 </div>
-              )}
 
-              {data.customer_note && (
-                <div>
-                  <dt className="muted" style={{ fontSize: 'var(--t-xs)' }}>ملاحظتك</dt>
-                  <dd style={{ margin: 0 }}>{data.customer_note}</dd>
-                </div>
-              )}
-            </dl>
+                {data.address && (
+                  <div>
+                    <dt className="muted" style={{ fontSize: 'var(--t-xs)' }}>العنوان</dt>
+                    <dd style={{ margin: 0 }}>
+                      {data.address.street}، {data.address.area || data.address.city}
+                      <br />{data.address.recipient_name} · <span className="numeral">{data.address.phone}</span>
+                    </dd>
+                  </div>
+                )}
 
-            <div style={{ display: 'grid', gap: 'var(--s-2)', marginTop: 'var(--s-5)' }}>
-              {data.can_cancel && (
-                <button type="button" className="btn btn--danger btn--block" onClick={cancel} disabled={cancelling}>
-                  {cancelling ? 'جارٍ الإلغاء…' : 'إلغاء الطلب'}
-                </button>
-              )}
-              {data.can_reorder && (
-                <button type="button" className="btn btn--outline btn--block" onClick={reorder}>
-                  <IconRefresh size={15} /> إعادة الطلب
-                </button>
-              )}
-              <a href={`tel:${data.branch_phone}`} className="btn btn--ghost btn--block btn--sm">
-                <IconPhone size={15} /> اتصل بـ {data.branch_name}
-              </a>
+                {data.customer_note && (
+                  <div>
+                    <dt className="muted" style={{ fontSize: 'var(--t-xs)' }}>ملاحظتك</dt>
+                    <dd style={{ margin: 0 }}>{data.customer_note}</dd>
+                  </div>
+                )}
+              </dl>
+
+              <div className="receipt__thanks">شكرًا لزيارتكم</div>
+              <div className="barcode" aria-hidden="true" />
             </div>
+          </div>
+
+          <div style={{ display: 'grid', gap: 'var(--s-2)', marginTop: 'var(--s-5)' }}>
+            {data.can_cancel && (
+              <button type="button" className="btn btn--danger btn--block" onClick={cancel} disabled={cancelling}>
+                {cancelling ? 'جارٍ الإلغاء…' : 'إلغاء الطلب'}
+              </button>
+            )}
+            {data.can_reorder && (
+              <button type="button" className="btn btn--outline btn--block" onClick={reorder}>
+                <IconRefresh size={15} /> إعادة الطلب
+              </button>
+            )}
+            <a href={`tel:${data.branch_phone}`} className="btn btn--ghost btn--block btn--sm">
+              <IconPhone size={15} /> اتصل بـ {data.branch_name}
+            </a>
           </div>
         </aside>
       </div>

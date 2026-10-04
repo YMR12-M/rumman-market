@@ -1,12 +1,11 @@
 /**
- * زخارف الأقسام — رسوم خطّية بسيطة، واحدة لكل قسم.
- *
- * لماذا لا نستخدم صور منتجات؟
- * لأن مكتبة صور غير متجانسة تقتل الإحساس الفاخر. زخرفة واحدة لكل قسم
- * تُنتج كتالوجًا متّسقًا بصريًا مئة بالمئة — وهذا قرار هوية لا اختصار.
- *
- * كل زخرفة ترث اللون من currentColor فتتلوّن بلون القسم تلقائيًا.
+ * زخارف الأقسام الخطّية — **للاستخدام الإداري فقط** (معاينة المفتاح عند
+ * اختيار زخرفة للقسم). واجهة العملاء تستخدم الآن ستيكرات مسطّحة بحدّ
+ * حبر من lib/art.jsx؛ المفاتيح واحدة (leaf, cleaver, wave…) فلا يتغيّر
+ * شيء في قاعدة البيانات.
  */
+
+import { Fruit } from './art.jsx';
 
 const M = ({ children, ...props }) => (
   <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.5"
@@ -74,22 +73,11 @@ export function getMotif(key) {
 }
 
 /**
- * علامة رُمّان: ثمرة بثلاث حبّات.
- * الحبّات الثلاث تعني «أقسام كثيرة تحت قشرة واحدة» — جوهر فكرة البراند.
- * تُرسم بخط سميك (2.2) لتقرأ بوضوح حتى في 20px.
+ * علامة رُمّان: رمّانة بتاج أصفر وثلاث حبّات (من lib/art.jsx).
+ * الاسم القديم باقٍ حتى لا تنكسر الاستدعاءات؛ `seedColor` مهمَل لأن
+ * الألوان صارت جزءًا من الرسم نفسه.
  */
-export const BrandMark = ({ size = 32, seedColor, ...props }) => (
-  <svg width={size} height={size} viewBox="0 0 40 40" fill="none"
-       stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"
-       strokeLinejoin="round" aria-hidden="true" {...props}>
-    <path d="M20 11.5c5.9 0 9.4 4.3 9.4 9.9 0 5.7-4.1 10.2-9.4 10.2s-9.4-4.5-9.4-10.2c0-5.6 3.5-9.9 9.4-9.9Z" />
-    <path d="M20 11.5V7.4" />
-    <path d="M20 7.4c2-1.7 4.5-1.4 5.6-.9-.6 1.9-3 2.7-5.6.9Z" style={{ stroke: seedColor || 'currentColor' }} />
-    <circle cx="16.6" cy="20.1" r="1.55" fill={seedColor || 'currentColor'} stroke="none" />
-    <circle cx="23.4" cy="20.1" r="1.55" fill={seedColor || 'currentColor'} stroke="none" />
-    <circle cx="20" cy="25.4" r="1.55" fill={seedColor || 'currentColor'} stroke="none" />
-  </svg>
-);
+export const BrandMark = ({ size = 32, seedColor, ...props }) => <Fruit size={size} {...props} />;
 
 /**
  * نمط الحبّات — شبكة نقاط خفيفة تُستخدم كخلفية زخرفية للأقسام الملوّنة.

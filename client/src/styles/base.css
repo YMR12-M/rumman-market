@@ -9,9 +9,12 @@ html {
   scroll-behavior: smooth;
 }
 
+/* الورق: لونٌ دافئ + حبيبات دقيقة تُرسم مرة واحدة وتُبلَّط */
 body {
   margin: 0;
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: var(--grain);
+  background-size: 200px 200px;
   color: var(--text);
   font-family: var(--font-body);
   font-size: var(--t-base);
@@ -20,24 +23,23 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  transition: background var(--dur-mid) var(--ease), color var(--dur-mid) var(--ease);
+  transition: background-color var(--dur-mid) var(--ease), color var(--dur-mid) var(--ease);
 }
 
 h1, h2, h3, h4, h5 {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 800;
   line-height: var(--lh-tight);
   letter-spacing: var(--tr-display);
   text-wrap: balance;
 }
 
-/* Readex Pro ثقيلٌ بصريًا، فالوزن 600 عنده يعادل 800 في غيره.
-   نكتفي به في العناوين الكبيرة ونترك 700 للحظات النادرة. */
-h1 { font-size: clamp(2.2rem, 5.4vw, var(--t-3xl)); font-weight: 600; }
-h2 { font-size: clamp(1.7rem, 3.8vw, var(--t-2xl)); font-weight: 600; }
-h3 { font-size: clamp(1.32rem, 2.4vw, var(--t-xl)); letter-spacing: var(--tr-tight); }
-h4 { font-size: var(--t-md); letter-spacing: var(--tr-tight); }
+/* Kufam عريضٌ ثقيل: نحجز له سطرًا رحبًا حتى لا تُقصّ التشكيلات والنقاط */
+h1 { font-size: clamp(2.3rem, 5.6vw, var(--t-3xl)); font-weight: 900; line-height: 1.16; }
+h2 { font-size: clamp(1.75rem, 3.8vw, var(--t-2xl)); font-weight: 900; line-height: 1.2; }
+h3 { font-size: clamp(1.3rem, 2.4vw, var(--t-xl)); font-weight: 800; line-height: 1.3; }
+h4 { font-size: var(--t-md); font-weight: 800; line-height: 1.35; }
 
 p { margin: 0 0 var(--s-4); }
 p:last-child { margin-bottom: 0; }
@@ -55,28 +57,28 @@ button { cursor: pointer; background: none; border: none; padding: 0; }
 
 ul, ol { margin: 0; padding: 0; list-style: none; }
 
-hr { border: none; border-top: 1px solid var(--line); margin: var(--s-6) 0; }
+hr { border: none; border-top: var(--bw-thin) solid var(--line); margin: var(--s-6) 0; }
 
-/* التركيز بلوحة المفاتيح واضح دائمًا — شرط وصولية */
+/* التركيز بلوحة المفاتيح واضح دائمًا — شرط وصولية.
+   حلقة حبر بفجوة ورقية تُقرأ فوق أي لون قسم. */
 :focus-visible {
-  outline: 2px solid var(--brand);
-  outline-offset: 2px;
+  outline: 3px solid var(--rule);
+  outline-offset: 3px;
   border-radius: var(--r-sm);
 }
 :focus:not(:focus-visible) { outline: none; }
 
-::selection { background: var(--brand); color: #fff; }
-::-moz-selection { background: var(--brand); color: #fff; }
+::selection { background: var(--sun); color: var(--ink-950); }
+::-moz-selection { background: var(--sun); color: var(--ink-950); }
 
-/* شريط تمرير بلون البراند */
-::-webkit-scrollbar { width: 11px; height: 11px; }
+/* شريط تمرير مربّع بلون الكرافت */
+::-webkit-scrollbar { width: 12px; height: 12px; }
 ::-webkit-scrollbar-track { background: var(--bg-sunken); }
 ::-webkit-scrollbar-thumb {
-  background: var(--ink-200);
-  border-radius: var(--r-pill);
+  background: var(--kraft);
+  border-radius: var(--r-xs);
   border: 3px solid var(--bg-sunken);
 }
-[data-theme='dark'] ::-webkit-scrollbar-thumb { background: var(--ink-700); }
 ::-webkit-scrollbar-thumb:hover { background: var(--brand); }
 
 /* ── فئات مساعدة ───────────────────────────────────────────────── */
@@ -88,36 +90,43 @@ hr { border: none; border-top: 1px solid var(--line); margin: var(--s-6) 0; }
   padding-inline: var(--s-5);
 }
 .container--narrow { max-width: var(--container-narrow); }
+@media (max-width: 480px) { .container { padding-inline: var(--s-4); } }
 
-/* «العين الصغيرة» فوق العناوين — كبسولة ملوّنة صارت توقيع البراند */
+/* «العين الصغيرة» فوق العناوين — صارت ملاحظة بخط اليد كأن أحدهم كتبها
+   بقلم على الصفحة، مع حبّة رمّان بدل النقطة. */
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: var(--s-2);
-  padding: 0.38em 0.9em;
-  border-radius: var(--r-pill);
-  background: var(--brand-tint);
+  gap: 0.5em;
+  margin-bottom: var(--s-2);
+  font-family: var(--font-hand);
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.3;
   color: var(--brand-text);
-  font-family: var(--font-display);
-  font-size: var(--t-xs);
-  font-weight: 500;
-  letter-spacing: var(--tr-tight);
-  margin-bottom: var(--s-3);
-  line-height: 1.5;
+  transform: rotate(-1.4deg);
+  transform-origin: right center;
 }
 .eyebrow::before {
   content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: currentColor;
+  width: 0.62em;
+  height: 0.8em;
   flex-shrink: 0;
+  background: currentColor;
+  /* شكل حبّة الرمّان: قطرة مائلة */
+  border-radius: 62% 38% 56% 44% / 66% 58% 42% 34%;
+  transform: rotate(18deg);
 }
-/* نسخ ملوّنة تُستخدم حسب سياق القسم */
+/* نسخ حسب السياق */
 .eyebrow--lux,
-.eyebrow--saffron { background: var(--lux-tint); color: var(--lux-text); box-shadow: inset 0 0 0 1px var(--lux-line); }
-.eyebrow--basil   { background: var(--success-tint); color: var(--success-text); }
-.eyebrow--onDark  { background: rgba(227, 179, 65, 0.14); color: var(--gold-300); box-shadow: inset 0 0 0 1px rgba(227, 179, 65, 0.3); }
+.eyebrow--saffron {
+  padding: 0.02em 0.6em 0.1em;
+  background: var(--sun);
+  color: var(--ink-950);
+  border-radius: var(--r-xs);
+}
+.eyebrow--basil  { color: var(--success-text); }
+.eyebrow--onDark { color: var(--gold-300); }
 
 .lede {
   font-size: var(--t-md);
@@ -128,29 +137,41 @@ hr { border: none; border-top: 1px solid var(--line); margin: var(--s-6) 0; }
 
 .muted { color: var(--text-muted); }
 
-/* الأرقام بخط Space Grotesk — شخصية حديثة وأرقام جدولية تتحاذى */
+/* الأرقام العامة: Tajawal بأرقام لاتينية متحاذية */
 .numeral {
   font-family: var(--font-num);
   font-variant-numeric: lining-nums tabular-nums;
   font-feature-settings: 'lnum' 1, 'tnum' 1;
-  letter-spacing: -0.01em;
 }
+/* أرقام اللافتات: Anton المكثّف الثقيل — للأسعار وأرقام الممرّات فقط */
+.price-num {
+  font-family: var(--font-price);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  font-variant-numeric: lining-nums;
+}
+.hand { font-family: var(--font-hand); font-weight: 700; }
 
-.rule { height: 1px; background: var(--line); border: none; margin: 0; }
+.rule { height: var(--bw-thin); background: var(--rule); border: none; margin: 0; }
 
 .section { padding-block: clamp(var(--s-7), 7vw, var(--s-9)); }
 .section--tight { padding-block: var(--s-7); }
 .section--sunken { background: var(--bg-sunken); }
 .section--noir { background: var(--grad-noir); color: var(--ivory); }
-.section--noir .muted, .section--noir .lede { color: rgba(255, 244, 247, 0.62); }
+.section--noir .muted, .section--noir .lede { color: rgba(255, 248, 232, 0.7); }
 
-/* نصّ ذهبي — للأرقام البطلة والكلمات المفتاحية فقط */
-.gilt {
-  background: var(--grad-lux);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* قلم التمييز: خطٌّ أصفر خلف الكلمة كأنه رُسم بهايلايتر.
+   box-decoration-break يجعله يتكرّر صحيحًا عند التفاف الكلمة لسطرين. */
+.hl {
+  background: linear-gradient(transparent 58%, var(--sun) 58% 92%, transparent 92%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding-inline: 0.12em;
+  color: inherit;
 }
+/* اسم قديم باقٍ للتوافق: كان نصًّا ذهبيًا متدرّجًا */
+.gilt { color: inherit; background: none; }
 
 .stack > * + * { margin-top: var(--s-4); }
 
@@ -161,18 +182,23 @@ hr { border: none; border-top: 1px solid var(--line); margin: var(--s-6) 0; }
 }
 
 /* ── كشف عند التمرير (يديره مراقب واحد في App) ─────────────────── */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+/* دخول «الختم»: تهبط الورقة أكبر قليلًا بميلٍ خفيف ثم تستقر.
+   نستخدم animation بـ fill-mode: backwards لا transition: فلا يبقى بعد
+   الظهور أي تأخير أو transform محجوز يعطّل حركة المرور (hover). */
+.reveal { opacity: 0; }
+.reveal.is-visible {
+  opacity: 1;
+  animation: stamp-in var(--dur-slow) var(--ease-stamp) backwards;
 }
-.reveal.is-visible { opacity: 1; transform: none; }
-
-.reveal[data-delay='1'] { transition-delay: 60ms; }
-.reveal[data-delay='2'] { transition-delay: 120ms; }
-.reveal[data-delay='3'] { transition-delay: 180ms; }
-.reveal[data-delay='4'] { transition-delay: 240ms; }
-.reveal[data-delay='5'] { transition-delay: 300ms; }
-.reveal[data-delay='6'] { transition-delay: 360ms; }
-.reveal[data-delay='7'] { transition-delay: 420ms; }
-.reveal[data-delay='8'] { transition-delay: 480ms; }
+@keyframes stamp-in {
+  from { opacity: 0; transform: translateY(16px) rotate(-0.5deg) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+.reveal[data-delay='1'] { animation-delay: 50ms; }
+.reveal[data-delay='2'] { animation-delay: 100ms; }
+.reveal[data-delay='3'] { animation-delay: 150ms; }
+.reveal[data-delay='4'] { animation-delay: 200ms; }
+.reveal[data-delay='5'] { animation-delay: 250ms; }
+.reveal[data-delay='6'] { animation-delay: 300ms; }
+.reveal[data-delay='7'] { animation-delay: 350ms; }
+.reveal[data-delay='8'] { animation-delay: 400ms; }

@@ -1,20 +1,18 @@
 import { useMemo } from 'react';
-import { getMotif } from '@/lib/motifs.jsx';
-import { initial } from '@/lib/format.js';
+import { getItemArt } from '@/lib/art-items.jsx';
 
 /**
  * ═══════════════════════════════════════════════════════════════
- *  لوحة المنتج — البديل البصري للصور الفوتوغرافية
+ *  لوحة المنتج — ورقة ملوّنة عليها ملصق المنتج
  *
- *  الطبقات، وكلّها مشتقّة من **لون القسم**:
- *   ١. خلفية بلون القسم مخفّفًا + شبكة نقاط ناعمة.
- *   ٢. الحرف الأول من اسم المنتج بحجم كبير في الزاوية.
- *   ٣. زخرفة القسم الخطّية بلونه الكامل في المنتصف.
- *   ٤. كبسولة اسم القسم + ختم RUMMAN.
+ *  إن وُجدت صورة حقيقية للمنتج عُرضت بكامل اللوحة. وإن لم توجد (وهو
+ *  الغالب حتى يرفع المدير صورًا) رُسم ملصق القسم مقصوصًا بإطار عاجي
+ *  فوق ورقة بلون القسم.
  *
- *  مشكلة كانت واردة: خمسة منتجات في قسم واحد تتشابه لوحاتها.
- *  الحل: نشتق **دورانًا وإزاحة** ثابتين من اسم المنتج نفسه، فتختلف
- *  كل لوحة عن جارتها بينما تبقى النتيجة ثابتة في كل تحميل.
+ *  مشكلة كانت واردة: خمسة منتجات في قسم واحد تتشابه لوحاتها. الحل:
+ *  نشتق من اسم المنتج نفسه **نمط الخلفية** (نقاط/خطوط/مربّعات/شمس)
+ *  و**ميلًا وإزاحة** ثابتَين — فتختلف كل لوحة عن جارتها وتبقى النتيجة
+ *  ثابتة في كل تحميل.
  * ═══════════════════════════════════════════════════════════════
  */
 
@@ -27,45 +25,48 @@ function hash(text) {
   return value;
 }
 
+const PATTERNS = ['dots', 'stripes', 'grid', 'sun'];
+
 export default function ProductPlate({
   name = '',
   motif = 'leaf',
-  accent = '#D81E4A',
-  categoryLatin = 'RUMMAN',
+  accent = '#D5233F',
+  image = null,
   compact = false,
 }) {
-  const Motif = getMotif(motif);
+  const Art = getItemArt(name, motif);
 
   const variant = useMemo(() => {
     const seed = hash(name || motif);
     return {
-      rotate: ((seed % 17) - 8),          // من -8 إلى +8 درجة
-      scale: 1 + ((seed >> 5) % 9) / 100, // من 1.00 إلى 1.08
-      shiftX: ((seed >> 9) % 11) - 5,     // إزاحة أفقية خفيفة
+      pattern: PATTERNS[seed % PATTERNS.length],
+      rotate: ((seed >> 3) % 13) - 6,           // من -6 إلى +6 درجة
+      scale: 0.94 + ((seed >> 7) % 13) / 100,   // من 0.94 إلى 1.06
+      shift: ((seed >> 11) % 9) - 4,            // إزاحة أفقية خفيفة %
     };
   }, [name, motif]);
 
-  const style = {
-    '--plate-bg': `color-mix(in srgb, ${accent} 13%, var(--bg-raised))`,
-    '--plate-dot': `color-mix(in srgb, ${accent} 26%, transparent)`,
-    '--plate-accent': accent,
-  };
+  if (image) {
+    return (
+      <div className="plate plate--photo" style={{ '--cat-color': accent }} aria-hidden="true">
+        <img src={image} alt="" loading="lazy" />
+      </div>
+    );
+  }
 
   return (
-    <div className="plate" style={style} aria-hidden="true">
-      <span className="plate__glyph">{initial(name)}</span>
-
-      <Motif
-        className="plate__motif"
-        style={{ transform: `rotate(${variant.rotate}deg) scale(${variant.scale}) translateX(${variant.shiftX}px)` }}
-      />
-
-      {!compact && (
-        <>
-          <span className="plate__eyebrow">{categoryLatin}</span>
-          <span className="plate__stamp">RUMMAN</span>
-        </>
-      )}
+    <div
+      className={`plate plate--${variant.pattern}${compact ? ' plate--compact' : ''}`}
+      style={{ '--cat-color': accent }}
+      aria-hidden="true"
+    >
+      <span className="plate__ground" />
+      <div
+        className="plate__art"
+        style={{ transform: `translateX(${variant.shift}%) rotate(${variant.rotate}deg) scale(${variant.scale})` }}
+      >
+        <Art className="die-cut" />
+      </div>
     </div>
   );
 }

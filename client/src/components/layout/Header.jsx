@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import Logo from '@/components/brand/Logo.jsx';
 import SearchBar from './SearchBar.jsx';
 import Drawer from '@/components/ui/Drawer.jsx';
+import { Aril } from '@/lib/art.jsx';
 import {
   IconCart, IconUser, IconHeart, IconPin, IconSun, IconMoon,
   IconMenu, IconChevronLeft, IconLogout, IconChart,
@@ -27,7 +28,6 @@ export default function Header() {
 
   const [stuck, setStuck] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [announceIndex, setAnnounceIndex] = useState(0);
   const [apiDown, setApiDown] = useState(!isApiReachable());
 
   // ظل خفيف تحت الهيدر بعد التمرير — إشارة عمق بلا ضجيج
@@ -38,21 +38,22 @@ export default function Header() {
   }, []);
 
   /**
-   * الشريط العلوي يعرض ما هو حقيقي فقط: عروضًا سارية في قاعدة
-   * البيانات، وحدَّ التوصيل المجاني الفعلي. لو لم يوجد شيء اختفى
-   * الشريط — أفضل من شعار مكتوب في الكود لا يقابله عرضٌ قائم.
+   * شريط الأخبار يعرض ما هو حقيقي فقط: عروضًا سارية في قاعدة
+   * البيانات. لو لم يوجد شيء اكتفى بالجملة التعريفية، ولو لم توجد
+   * اختفى الشريط — أفضل من شعار مكتوب في الكود لا يقابله عرضٌ قائم.
    */
   const announcements = useMemo(() => {
-    const items = (site.announcements ?? []).map((item) => item.text);
-    // لا عروض سارية؟ الجملة التعريفية أصدق من شعار مصنوع
-    return items.length > 0 ? items : [site.brand.tagline].filter(Boolean);
+    const items = (site.announcements ?? []).filter((item) => item.text);
+    if (items.length > 0) return items;
+    return site.brand.tagline ? [{ text: site.brand.tagline }] : [];
   }, [site.announcements, site.brand.tagline]);
 
-  useEffect(() => {
-    if (announcements.length <= 1) return undefined;
-    const timer = setInterval(() => setAnnounceIndex((i) => (i + 1) % announcements.length), 6000);
-    return () => clearInterval(timer);
-  }, [announcements.length]);
+  /** نكرّر القائمة حتى يملأ كل نصف من الشريط عرض الشاشة فتبدو الحركة متّصلة */
+  const tickerRun = useMemo(() => {
+    if (announcements.length === 0) return [];
+    const copies = Math.max(3, Math.ceil(9 / announcements.length));
+    return Array.from({ length: copies }, () => announcements).flat();
+  }, [announcements]);
 
   useEffect(() => onApiStatusChange((reachable) => setApiDown(!reachable)), []);
 
@@ -64,11 +65,24 @@ export default function Header() {
 
   return (
     <>
-      <div className="announce">
-        <div className="container announce__inner">
-          <span className="announce__rotator" key={announceIndex}>
-            {announcements[announceIndex % Math.max(announcements.length, 1)] ?? site.brand.tagline}
-          </span>
+      <div className="announce ticker">
+        <div className="announce__inner">
+          {tickerRun.length > 0 && (
+            <div className="ticker__viewport">
+              <div className="ticker__track">
+                {[0, 1].map((half) => (
+                  <div key={half} style={{ display: 'flex' }} aria-hidden={half === 1 ? 'true' : undefined}>
+                    {tickerRun.map((item, index) => (
+                      <span className="ticker__item" key={index}>
+                        <Aril size={8} color="currentColor" />
+                        {item.href && half === 0 ? <Link to={item.href}>{item.text}</Link> : item.text}
+                      </span>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
           <nav className="announce__links">
             <Link to="/branches">فروعنا</Link>
             <Link to="/offers">العروض</Link>
@@ -77,6 +91,9 @@ export default function Header() {
           </nav>
         </div>
       </div>
+
+      {/* مظلّة المحلّ: تتدلّى فوق اللافتة */}
+      <div className="shopfront-awning" aria-hidden="true"><div className="awning" /></div>
 
       {apiDown && (
         <div className="conn-alert" role="status">
@@ -111,7 +128,7 @@ export default function Header() {
               </Link>
             )}
 
-            <button type="button" className="icon-btn" onClick={toggle}
+            <button type="button" className="icon-btn header__theme" onClick={toggle}
                     aria-label={theme === 'dark' ? 'الوضع الفاتح' : 'الوضع الليلي'}>
               {theme === 'dark' ? <IconSun size={20} /> : <IconMoon size={20} />}
             </button>
@@ -147,6 +164,7 @@ export default function Header() {
                   to={`/category/${category.slug}`}
                   className={({ isActive }) => `catnav__item${isActive ? ' is-active' : ''}`}
                 >
+                  <i className="catnav__dot" style={{ '--dot': category.accent_color }} aria-hidden="true" />
                   {category.name_ar}
                 </NavLink>
               </li>
@@ -189,6 +207,13 @@ export default function Header() {
               </Link>
             </li>
           ))}
+
+          <li>
+            <button type="button" className="mobile-nav__link" style={{ width: '100%' }} onClick={toggle}>
+              {theme === 'dark' ? 'الوضع الفاتح' : 'الوضع الليلي'}
+              {theme === 'dark' ? <IconSun size={16} /> : <IconMoon size={16} />}
+            </button>
+          </li>
 
           {isStaff && (
             <li>

@@ -8,7 +8,7 @@ import { ProductCardSkeleton } from '@/components/ui/Skeleton.jsx';
  * شريط منتجات أفقي قابل للتمرير مع أزرار تنقّل.
  * نستخدم scrollBy بدل مكتبة سلايدر — أخفّ وأكثر انسيابية على الموبايل.
  */
-export default function ProductRail({ eyebrow, title, description, actionLabel, actionTo, products, loading, skeletonCount = 5 }) {
+export default function ProductRail({ eyebrow, title, description, actionLabel, actionTo, products, loading, skeletonCount = 5, tone }) {
   const trackRef = useRef(null);
 
   const scrollBy = (direction) => {
@@ -23,7 +23,7 @@ export default function ProductRail({ eyebrow, title, description, actionLabel, 
 
   return (
     <section className="rail">
-      <SectionHead eyebrow={eyebrow} title={title} description={description} actionLabel={actionLabel} actionTo={actionTo}>
+      <SectionHead eyebrow={eyebrow} title={title} description={description} actionLabel={actionLabel} actionTo={actionTo} tone={tone}>
         <div className="rail__nav">
           <button type="button" onClick={() => scrollBy(-1)} aria-label="السابق"><IconChevronRight size={18} /></button>
           <button type="button" onClick={() => scrollBy(1)} aria-label="التالي"><IconChevronLeft size={18} /></button>

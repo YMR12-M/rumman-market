@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
 import SectionHead from '@/components/brand/SectionHead.jsx';
-import { BrandMark, getMotif } from '@/lib/motifs.jsx';
+import { OpenFruit, Burst, getArt } from '@/lib/art.jsx';
 import { IconCheck, IconLeaf, IconStore, IconShield } from '@/lib/icons.jsx';
 import { useBranch } from '@/context/BranchContext.jsx';
 import { useSite } from '@/context/SiteContext.jsx';
 import { num } from '@/lib/format.js';
 import { SOURCING_STEPS, COMMITMENTS, FAQ } from '@/data/content.js';
-import { logoLockup } from '@/assets/index.js';
 
 export default function AboutPage() {
   const { branches } = useBranch();
@@ -27,24 +26,26 @@ export default function AboutPage() {
   return (
     <>
       {/* البطل */}
-      <section className="hero">
-        <div className="container hero__inner">
+      <header className="page-hero">
+        <div className="container page-hero__inner">
           <div>
             <span className="eyebrow">عن رُمّان</span>
-            <h1 className="hero__title">لا نبيع كل شيء.<em>نبيع ما نأكله نحن.</em></h1>
-            <p className="hero__lede">
+            <h1>لا نبيع كل شيء.<br /><span className="hl">نبيع ما نأكله نحن.</span></h1>
+            <p className="lede">
               {since ? `بدأت ${brand.name} سنة ${since} بفكرة بسيطة: ` : `تقوم ${brand.name} على فكرة بسيطة: `}
               أن يكون اختيار المنتج مسؤولية المتجر لا مسؤولية العميل.
             </p>
-            <img src={logoLockup} alt="شعار رُمّان" width="260" style={{ marginTop: 'var(--s-6)' }} />
           </div>
 
-          <div className="hero__art">
-            <BrandMark size={210} seedColor="var(--gold-400)" />
-            {since && <span className="hero__art-caption">منذ {since}</span>}
+          <div className="page-hero__art" aria-hidden="true">
+            <div className="about-board">
+              <div className="hero__disc halftone" />
+              <OpenFruit size={320} className="open-fruit" />
+              {since && <Burst size={100} tone="sun" className="hero__burst">منذ<b>{since}</b></Burst>}
+            </div>
           </div>
         </div>
-      </section>
+      </header>
 
       {/* الأرقام */}
       {figures.length > 0 && (
@@ -83,7 +84,8 @@ export default function AboutPage() {
           </div>
 
           <div className="story__panel reveal" data-delay="2">
-            <BrandMark size={190} seedColor="var(--gold-400)" />
+            <span className="tape" style={{ insetBlockStart: 16, insetInlineStart: 22, '--tape-tilt': '-8deg' }} />
+            <OpenFruit size={250} style={{ rotate: '-8deg', filter: 'drop-shadow(-6px 7px 0 var(--ink-950))' }} />
           </div>
         </div>
       </section>
@@ -96,17 +98,26 @@ export default function AboutPage() {
           description="لا يدخل صنف إلى رُمّان لأن مندوبه مرّ علينا. هذه هي الطريقة."
         />
 
-        <div className="cats" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))' }}>
+        <div className="sourcing">
           {SOURCING_STEPS.map((step, index) => {
-            const Motif = getMotif(step.motif);
+            const Art = getArt(step.motif);
+            /* ألوان الخطوات رموز CSS لا ست عشرية، فنحدّد لون الحبر فوقها يدويًا */
+            const ink = index === 3 ? '#fff' : 'var(--ink-950)';
             return (
-              <article className="cat-card reveal" key={step.title} data-delay={index + 1} style={{ '--cat-color': step.color }}>
-                <Motif className="cat-card__motif" />
-                <div>
-                  <div className="numeral" style={{ fontSize: 'var(--t-lg)', fontWeight: 700, opacity: 0.7 }}>0{index + 1}</div>
-                  <div className="cat-card__name" style={{ marginTop: 6 }}>{step.title}</div>
-                  <div className="cat-card__tag">{step.note}</div>
+              <article
+                className="aisle sign reveal"
+                key={step.title}
+                data-delay={index + 1}
+                style={{ '--cat-color': step.color, '--cat-ink': ink, '--tilt': ['-0.7deg', '0.6deg', '-0.4deg', '0.8deg'][index] }}
+              >
+                <span className="sign__screw sign__screw--tl" />
+                <span className="sign__screw sign__screw--tr" />
+                <div className="aisle__code"><span className="price-num">0{index + 1}</span></div>
+                <div className="aisle__text">
+                  <div className="aisle__name">{step.title}</div>
+                  <div className="aisle__tag">{step.note}</div>
                 </div>
+                <div className="aisle__art" aria-hidden="true"><Art className="die-cut" /></div>
               </article>
             );
           })}
@@ -151,13 +162,13 @@ export default function AboutPage() {
 
       {/* التزاماتنا */}
       <section className="section--tight container" style={{ paddingBottom: 'var(--s-9)' }}>
-        <div className="panel" style={{ background: 'var(--brand)', color: '#fff', borderColor: 'transparent' }}>
+        <div className="commit-panel">
           <span className="eyebrow eyebrow--onDark">التزامنا</span>
-          <h2 style={{ color: '#fff', fontSize: 'var(--t-lg)', marginBottom: 'var(--s-4)' }}>خمسة أشياء نعد بها، ونُحاسَب عليها</h2>
+          <h2>خمسة أشياء نعد بها، ونُحاسَب عليها</h2>
           <ul style={{ display: 'grid', gap: 'var(--s-3)' }}>
-{COMMITMENTS.map((line) => (
-              <li key={line} style={{ display: 'flex', gap: 'var(--s-3)', fontSize: 'var(--t-sm)', color: 'rgba(255,255,255,.9)' }}>
-                <IconCheck size={17} style={{ color: '#fff', flexShrink: 0, marginTop: 4 }} /> {line}
+            {COMMITMENTS.map((line) => (
+              <li key={line}>
+                <IconCheck size={17} /> {line}
               </li>
             ))}
           </ul>
@@ -173,7 +184,7 @@ function FaqItem({ question, answer }) {
     <details className="faq-item">
       <summary className="faq-item__q" style={{ listStyle: 'none', cursor: 'pointer' }}>
         {question}
-        <span aria-hidden="true" style={{ color: 'var(--gold-400)' }}>+</span>
+        <span aria-hidden="true" className="faq-item__plus">+</span>
       </summary>
       <p className="faq-item__a">{answer}</p>
     </details>

@@ -19,6 +19,7 @@ import { WishlistProvider } from '@/context/WishlistContext.jsx';
 import './styles/tokens.css';
 import './styles/base.css';
 import './styles/components.css';
+import './styles/print.css';
 import './styles/layout.css';
 import './styles/product.css';
 import './styles/pages.css';

@@ -13,7 +13,7 @@
  */
 
 /** حبر الهوية الخمريّ — بديلنا عن الأسود في كل نصّ داكن */
-export const INK = '#14060E';
+export const INK = '#1D0B15';
 
 /** تحويل #RRGGBB أو #RGB إلى [r, g, b] */
 function parseHex(hex) {
