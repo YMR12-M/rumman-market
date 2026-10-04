@@ -1,0 +1,13 @@
+<!-- علامة رُمّان: رمّانة حمراء بتاج أصفر وثلاث حبّات، على ورق كريمي بحدّ حبر. أيقونة التطبيق وصورة المشاركة. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="رُمّان">
+  <rect width="512" height="512" rx="112" fill="#FBF2DF"/>
+  <rect x="16" y="16" width="480" height="480" rx="98" fill="none" stroke="#1D0B15" stroke-width="14"/>
+  <g transform="translate(256 268) scale(7.2) translate(-32 -32)">
+    <path d="M32 14c14 0 24 10 24 23S46 58 32 58 8 50 8 37 18 14 32 14Z" fill="#D5233F" stroke="#1D0B15" stroke-width="3.4" stroke-linejoin="round"/>
+    <path d="M18 30c2-6 6-10 12-12" fill="none" stroke="#FFF8E8" stroke-width="2.6" stroke-linecap="round" opacity=".75"/>
+    <path d="M23 17l2-9 4 5 3-7 3 7 4-5 2 9Z" fill="#FFC533" stroke="#1D0B15" stroke-width="3" stroke-linejoin="round"/>
+    <circle cx="24" cy="37" r="3.6" fill="#FFF8E8"/>
+    <circle cx="40" cy="37" r="3.6" fill="#FFF8E8"/>
+    <circle cx="32" cy="47.5" r="3.6" fill="#FFF8E8"/>
+  </g>
+</svg>

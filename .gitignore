@@ -23,6 +23,10 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# شهادات HTTPS المحلية لمعاينة تطبيق الجوّال على هاتف حقيقي.
+# فيها مفتاح خاص، والعنوان الذي تغطّيه خاصّ بجهاز وشبكة بعينهما.
+mobile/.certs/
+
 # Uploads (ملفات المستخدمين المرفوعة)
 server/uploads/*
 !server/uploads/.gitkeep

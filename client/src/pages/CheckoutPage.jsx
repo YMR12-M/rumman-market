@@ -280,32 +280,50 @@ export default function CheckoutPage() {
         </div>
 
         <aside className="summary">
-          <div className="panel">
-            <h3 style={{ fontSize: 'var(--t-md)', marginBottom: 'var(--s-4)' }}>الملخّص</h3>
+          <div className="receipt">
+            <div className="receipt__paper">
+              <div className="receipt__title">رُمّان</div>
+              <div className="receipt__sub">{branch?.name_ar} · إيصال الطلب</div>
+              <hr />
 
-            <div className="summary__row"><span>المجموع الفرعي</span><span className="numeral">{money(cart.totals.subtotal)}</span></div>
-            {cart.totals.discount_total > 0 && (
-              <div className="summary__row summary__row--discount">
-                <span>خصم {cart.coupon?.code}</span><span className="numeral">−{money(cart.totals.discount_total)}</span>
+              {cart.items.slice(0, 8).map((item) => (
+                <div className="leader" key={item.product_id}>
+                  <span>{item.name_ar} × {item.quantity}</span>
+                  <span className="numeral">{money(item.line_total).replace(' ج.م', '')}</span>
+                </div>
+              ))}
+              {cart.items.length > 8 && (
+                <div className="muted" style={{ fontSize: 'var(--t-xs)', marginTop: 4 }}>و{cart.items.length - 8} أصناف أخرى…</div>
+              )}
+              <hr />
+
+              <div className="leader"><span>المجموع الفرعي</span><span className="numeral">{money(cart.totals.subtotal)}</span></div>
+              {cart.totals.discount_total > 0 && (
+                <div className="leader"><span>خصم {cart.coupon?.code}</span><span className="numeral">−{money(cart.totals.discount_total)}</span></div>
+              )}
+              {pointsValue > 0 && (
+                <div className="leader"><span>نقاط الولاء</span><span className="numeral">−{money(pointsValue)}</span></div>
+              )}
+              <div className="leader"><span>التوصيل</span><span className="numeral">{deliveryFee > 0 ? money(deliveryFee) : 'مجاني'}</span></div>
+              {cart.totals.tax_total > 0 && (
+                <div className="leader"><span>ضريبة القيمة المضافة</span><span className="numeral">{money(cart.totals.tax_total)}</span></div>
+              )}
+              <hr />
+              <div className="leader leader--total">
+                <span>الإجمالي</span>
+                <span>{money(grandTotal).replace(' ج.م', '')} <small style={{ fontFamily: 'var(--font-display)', fontSize: '0.9rem' }}>ج.م</small></span>
               </div>
-            )}
-            {pointsValue > 0 && (
-              <div className="summary__row summary__row--discount">
-                <span>نقاط الولاء</span><span className="numeral">−{money(pointsValue)}</span>
-              </div>
-            )}
-            <div className="summary__row"><span>التوصيل</span><span className="numeral">{deliveryFee > 0 ? money(deliveryFee) : 'مجاني'}</span></div>
-            {cart.totals.tax_total > 0 && (
-              <div className="summary__row"><span>ضريبة القيمة المضافة</span><span className="numeral">{money(cart.totals.tax_total)}</span></div>
-            )}
-            <div className="summary__row summary__row--total"><span>الإجمالي</span><span className="numeral">{money(grandTotal)}</span></div>
 
-            <p className="muted" style={{ fontSize: 'var(--t-xs)', marginTop: 'var(--s-3)' }}>
-              ستكسب <strong className="numeral">{num(Math.floor(cart.totals.subtotal))}</strong> نقطة عند تسليم هذا الطلب.
-            </p>
+              <p className="muted" style={{ fontSize: 'var(--t-xs)', marginTop: 'var(--s-3)' }}>
+                ستكسب <strong className="numeral">{num(Math.floor(cart.totals.subtotal))}</strong> نقطة عند تسليم هذا الطلب.
+              </p>
 
-            <Link to="/cart" className="btn btn--ghost btn--block btn--sm" style={{ marginTop: 'var(--s-2)' }}>تعديل السلة</Link>
+              <div className="receipt__thanks">شكرًا لزيارتكم</div>
+              <div className="barcode" aria-hidden="true" />
+            </div>
           </div>
+
+          <Link to="/cart" className="btn btn--ghost btn--block btn--sm" style={{ marginTop: 'var(--s-4)' }}>تعديل السلة</Link>
         </aside>
       </div>
     </div>

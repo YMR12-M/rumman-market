@@ -1,6 +1,6 @@
 import SectionHead from '@/components/brand/SectionHead.jsx';
 import { Skeleton } from '@/components/ui/Skeleton.jsx';
-import { IconCheck } from '@/lib/icons.jsx';
+import { Aril } from '@/lib/art.jsx';
 import { catalogService } from '@/services/index.js';
 import { useAsync } from '@/hooks/index.js';
 import { useSite } from '@/context/SiteContext.jsx';
@@ -39,16 +39,17 @@ export default function LoyaltyBand() {
             {(tiers.data?.tiers ?? []).map((tier, index) => (
               <div
                 key={tier.key}
-                className={`tier reveal${tier.key === 'gold' ? ' tier--featured' : ''}`}
+                className={`tier tier--${tier.key} reveal${tier.key === 'gold' ? ' tier--featured' : ''}`}
                 data-delay={index + 1}
               >
+                <span className="tier__punch" aria-hidden="true" />
                 <div className="tier__name">{tier.label}</div>
                 <div className="tier__req">
                   {Number(tier.minSpent) > 0 ? `إنفاق ${money(tier.minSpent)}` : 'من أول طلب'}
                 </div>
                 <ul className="tier__perks">
                   {(tier.perks ?? []).map((perk) => (
-                    <li key={perk}><IconCheck size={15} /> {perk}</li>
+                    <li key={perk}><Aril size={9} color="currentColor" /> {perk}</li>
                   ))}
                 </ul>
               </div>

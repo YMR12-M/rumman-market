@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '@/components/brand/Logo.jsx';
+import { Fruit } from '@/lib/art.jsx';
 import { IconPhone, IconMail, IconPin } from '@/lib/icons.jsx';
 import { contentService } from '@/services/index.js';
 import { useToast } from '@/context/ToastContext.jsx';
 import { useBranch } from '@/context/BranchContext.jsx';
 import { FOOTER_COLUMNS } from '@/data/content.js';
 import { useSite } from '@/context/SiteContext.jsx';
-
+import { num } from '@/lib/format.js';
 
 export default function Footer() {
   const toast = useToast();
@@ -37,15 +37,23 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="container">
-        <div className="footer__top">
-          <div>
-            <Logo inverse />
-            <p className="footer__note" style={{ marginTop: 'var(--s-4)' }}>
-              سوبر ماركت انتقائي في {branches.length || 7} فروع. نختار المنتج قبل أن نعرضه،
-              ونكتب مصدره على البطاقة — لأن معرفة ما تأكله جزء من جودته.
-            </p>
+        <div className="footer__hero">
+          <div className="footer__brand">
+            <Fruit size={96} />
+            <div>
+              <div className="footer__word">رُمّان</div>
+              {brand.tagline && <div className="footer__hand">{brand.tagline}</div>}
+              <p className="footer__note">
+                سوبر ماركت انتقائي{branches.length > 0 ? ` في ${num(branches.length)} ${branches.length === 1 ? 'فرع' : 'فروع'}` : ''}.
+                نختار المنتج قبل أن نعرضه، ونكتب مصدره على البطاقة — لأن معرفة ما تأكله جزء من جودته.
+              </p>
+            </div>
+          </div>
 
-            <form className="newsletter" onSubmit={subscribe}>
+          <form className="newsletter-stub" onSubmit={subscribe}>
+            <h4>قسيمة النشرة</h4>
+            <p>عروض الأسبوع تصلك على بريدك، ولا شيء غيرها.</p>
+            <div className="newsletter">
               <input
                 type="email"
                 value={email}
@@ -54,12 +62,14 @@ export default function Footer() {
                 aria-label="اشترك في النشرة البريدية"
                 required
               />
-              <button type="submit" className="btn btn--saffron" disabled={sending}>
+              <button type="submit" className="btn btn--primary btn--sm" disabled={sending}>
                 {sending ? '…' : 'اشترك'}
               </button>
-            </form>
-          </div>
+            </div>
+          </form>
+        </div>
 
+        <div className="footer__top">
           {FOOTER_COLUMNS.map((column) => (
             <div key={column.title}>
               <h4 className="footer__title">{column.title}</h4>
@@ -91,6 +101,7 @@ export default function Footer() {
               </span>
             )}
           </div>
+          <span className="footer__bar" aria-hidden="true" />
         </div>
       </div>
     </footer>

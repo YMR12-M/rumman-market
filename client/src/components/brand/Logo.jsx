@@ -1,17 +1,17 @@
 import { Link } from 'react-router-dom';
-import { BrandMark } from '@/lib/motifs.jsx';
+import { Fruit } from '@/lib/art.jsx';
 
 /**
  * شعار رُمّان.
- * التركيب: علامة الثمرة داخل مربّع ياقوتي + الاسم العربي بخط عريض
- * + الاسم اللاتيني متباعد تحته. المربّع الملوّن هو ما يجعل الشعار
- * يُرى فورًا على أي خلفية — وهو جوهر النبرة الحيوية للبراند.
+ * التركيب: رمّانة حمراء بتاج أصفر (ملصق بحدّ حبر) + الاسم بخط Kufam
+ * العريض + الاسم اللاتيني بأرقام اللافتات متباعدًا تحته. لا مربّع
+ * ملوّن حولها: الرمّانة نفسها هي الشكل المقصوص.
  */
-export default function Logo({ inverse = false, size = 40, asLink = true }) {
+export default function Logo({ inverse = false, size = 46, asLink = true }) {
   const content = (
     <>
-      <span className="logo__badge" style={{ width: size, height: size }}>
-        <BrandMark size={size * 0.66} seedColor="var(--gold-400)" />
+      <span className="logo__badge">
+        <Fruit size={size} />
       </span>
       <span className="logo__text">
         <span className="logo__ar">رُمّان</span>

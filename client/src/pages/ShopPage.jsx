@@ -5,7 +5,8 @@ import { ProductGridSkeleton } from '@/components/ui/Skeleton.jsx';
 import EmptyState from '@/components/ui/EmptyState.jsx';
 import Pagination from '@/components/ui/Pagination.jsx';
 import { IconFilter, IconClose, IconChevronLeft } from '@/lib/icons.jsx';
-import { getMotif } from '@/lib/motifs.jsx';
+import { getArt } from '@/lib/art.jsx';
+import { contrastText } from '@/lib/color.js';
 import { catalogService } from '@/services/index.js';
 import { useAsync, useMediaQuery } from '@/hooks/index.js';
 import { useBranch } from '@/context/BranchContext.jsx';
@@ -96,7 +97,7 @@ export default function ShopPage() {
     !slug && activeCategory && { key: 'category', label: categories.find((c) => c.slug === activeCategory)?.name_ar },
   ].filter(Boolean);
 
-  const Motif = getMotif(category.data?.motif);
+  const Art = getArt(category.data?.motif || 'basket');
   const meta = products.data?.meta;
 
   const filtersPanel = (
@@ -176,8 +177,12 @@ export default function ShopPage() {
       {/* رأس القسم أو صفحة التسوّق العامة */}
       <div
         className={`cat-hero${category.data ? ' cat-hero--colored' : ''}`}
-        style={category.data ? { '--cat-color': category.data.accent_color } : undefined}
+        style={category.data ? { '--cat-color': category.data.accent_color, '--cat-ink': contrastText(category.data.accent_color) } : undefined}
       >
+        {category.data?.aisle_code && (
+          <span className="cat-hero__aisle" aria-hidden="true">{category.data.aisle_code}</span>
+        )}
+
         <div className="container">
           <nav className="crumbs">
             <Link to="/">الرئيسية</Link>
@@ -196,7 +201,10 @@ export default function ShopPage() {
             </p>
           )}
         </div>
-        {category.data && <Motif className="cat-hero__motif" />}
+
+        <div className="cat-hero__art" aria-hidden="true" style={{ '--cat-color': category.data?.accent_color }}>
+          <Art className="die-cut" />
+        </div>
       </div>
 
       <div className="container section--tight">

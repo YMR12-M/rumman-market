@@ -37,11 +37,11 @@ function ScrollToTop() {
   return null;
 }
 
-/** شاشة انتظار بعلامة البراند بدل دوّارة عامة */
+/** شاشة انتظار برمّانة تقفز بدل دوّارة عامة */
 function RouteFallback() {
   return (
-    <div style={{ display: 'grid', placeItems: 'center', minHeight: '60vh', color: 'var(--gold-400)' }}>
-      <BrandMark size={52} />
+    <div className="route-fallback" role="status" aria-label="جارٍ التحميل">
+      <BrandMark size={56} />
     </div>
   );
 }

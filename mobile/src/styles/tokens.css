@@ -1,0 +1,358 @@
+/* ═══════════════════════════════════════════════════════════════════
+   رُمّان · RUMMAN — توكنات التصميم
+   الهوية: «سوق مطبوع»
+
+   الفكرة: السوبر ماركت ليس صالة عرض فاخرة، بل مكانٌ تُمسك فيه الأشياء
+   بيدك: بطاقة سعر مثقوبة، لافتة ممرّ معدنية، إيصال ورقي، مظلّة محلّ
+   مخطّطة، ختم «طازج اليوم». لذلك تبدو الواجهة كمطبوعة سوق حقيقية:
+
+     • ورقٌ كريمي دافئ بملمس خفيف  →  الخلفية
+     • حبرٌ خمريّ وحدودٌ سميكة      →  الإطار والبنية
+     • أحمر الرمّان                  →  الفعل (ما يُنقَر)
+     • أصفر الهايلايتر               →  التمييز والعروض
+     • طيف الأقسام المشبع            →  اللافتات والستيكرات
+
+   القاعدة: لا تدرّجات ولا توهّج ولا زجاج. الألوان مسطّحة كأحبار
+   الطباعة، والعمق يأتي من ظلٍّ صلب مُزاح كأنّ الورقة مرفوعة عن الطاولة.
+
+   قاعدة صارمة: لا تكتب لونًا أو مقاسًا صريحًا في أي ملف آخر.
+   المرجع الكامل في docs/BRAND.md
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  color-scheme: light;
+
+  /* ═══ 1) الأحمر الرمّاني — قلب الهوية ════════════════════════ */
+  /* أدفأ من الياقوت القديم: أحمر ثمرة حقيقية لا وردٌ مائل للأرجواني */
+  --ruby-50:   #FFF0EC;
+  --ruby-100:  #FFDCD5;
+  --ruby-200:  #FFB9AE;
+  --ruby-300:  #FA8C86;
+  --ruby-400:  #EC5A60;
+  --ruby-500:  #D5233F;   /* ← اللون الأساسي */
+  --ruby-600:  #B3152F;
+  --ruby-700:  #8A0F25;   /* ← العنّابي العميق */
+  --ruby-800:  #5E0A19;
+  --ruby-900:  #36050E;
+
+  /* ═══ 2) أصفر الهايلايتر — التمييز والعروض ═══════════════════ */
+  /* كان «ذهب الشمبانيا» للفخامة؛ صار أصفر قلمِ التمييز وملصق الخصم.
+     الأسماء (gold-*) باقية حتى لا يُعاد كتابة كل استدعاء. */
+  --gold-50:   #FFF8E1;
+  --gold-100:  #FFEDB0;
+  --gold-200:  #FFE17E;
+  --gold-300:  #FFD452;
+  --gold-400:  #FFC533;   /* ← الهايلايتر */
+  --gold-500:  #F0A90B;
+  --gold-600:  #8A5A00;   /* نصّ على فاتح — يحقّق AA */
+  --gold-700:  #6A4400;
+
+  /* ═══ 3) طيف الأقسام — أحبار مطبعة مشبعة ═════════════════════ */
+  /* كل قسم يأخذ لونًا من هنا فتصير الشبكة «ممرّات» بألوان لافتاتها. */
+  --emerald:   #1FA25B;   /* ورقة طازجة · خضار وفاكهة · النجاح */
+  --emerald-deep: #0B6B3A;
+  --teal:      #17A8B6;   /* ثلج · أسماك · التوصيل */
+  --teal-deep: #0A6F7A;
+  --violet:    #7C4DDB;   /* غير غذائي · الولاء */
+  --violet-deep: #53289F;
+  --amber:     #F5A524;   /* مخبز · تنبيهات */
+  --amber-deep: #A4580A;
+  --coral:     #F26A4E;   /* جاهز · وجبات */
+  --coral-deep: #B8380F;
+  --azure:     #2F6FDB;   /* منظّفات · مياه */
+  --azure-deep: #1A48A8;
+  --lime:      #8CC63E;   /* عضوي · أعشاب */
+  --lime-deep: #4A7A0C;
+  --plum:      #B5338F;   /* حلويات · عروض */
+  --plum-deep: #7C1D63;
+
+  /* ═══ 4) الحبر — خمريّ لا رمادي ══════════════════════════════ */
+  /* حبرُ المطبعة ليس أسود صرفًا: ميلٌ خمريّ يجعل الصفحة من عائلة واحدة */
+  --ink-950:  #1D0B15;   /* ← حبر الحدود والنصّ */
+  --ink-900:  #2A1320;
+  --ink-800:  #3B1C2E;
+  --ink-700:  #55293D;
+  --ink-600:  #6F4152;
+  --ink-500:  #8B5E6F;
+  --ink-400:  #A9808F;
+  --ink-300:  #C9A9B3;
+  --ink-200:  #E4CFD0;
+  --ink-100:  #F0E0D6;
+  --ink-050:  #F8EEE0;
+
+  --ink-a16:  rgba(29, 11, 21, 0.16);
+  --ink-a12:  rgba(29, 11, 21, 0.12);
+  --ink-a08:  rgba(29, 11, 21, 0.08);
+  --ink-a04:  rgba(29, 11, 21, 0.04);
+
+  /* ═══ 5) الأوراق ═════════════════════════════════════════════ */
+  --paper:      #FBF2DF;   /* ورق الصفحة — كريمي دافئ */
+  --paper-warm: #F5E6C4;   /* أقسام غائرة */
+  --paper-deep: #EBD6A8;   /* فواصل ولوحات أعمق */
+  --card:       #FFFDF6;   /* ورقة مرفوعة (بطاقات) */
+  --kraft:      #CDA46B;   /* كرتون الكرافت */
+  --kraft-dark: #A9803F;
+
+  /* أسماء قديمة تُشير إلى الأوراق الجديدة */
+  --ivory:     #FFF8E8;    /* نصٌّ فاتح فوق الأسطح الداكنة */
+  --porcelain: var(--card);
+  --linen:     var(--paper-warm);
+  --blush:     #FDEADB;
+
+  /* ═══ 6) أدوار الواجهة (تتبدّل مع الوضع الليلي) ═════════════ */
+  --bg:            var(--paper);
+  --bg-raised:     var(--card);
+  --bg-sunken:     var(--paper-warm);
+  --bg-inverse:    var(--ink-950);
+  --bg-overlay:    rgba(29, 11, 21, 0.62);
+
+  --text:          var(--ink-950);
+  --text-soft:     var(--ink-700);
+  --text-muted:    var(--ink-600);
+  --text-faint:    var(--ink-500);
+  --text-inverse:  var(--ivory);
+
+  --line:          rgba(29, 11, 21, 0.22);
+  --line-soft:     rgba(29, 11, 21, 0.10);
+  --line-strong:   rgba(29, 11, 21, 0.45);
+
+  /* الحبر كلون إطار وظلّ — يصير كريميًا في الوضع الليلي */
+  --rule:          var(--ink-950);
+  /* ملء «حبري» (رقائق نشطة، تبويبات) وما يُكتب فوقه */
+  --fill-ink:      var(--ink-950);
+  --on-fill-ink:   var(--ivory);
+
+  --brand:         var(--ruby-500);
+  --brand-hover:   var(--ruby-600);
+  --brand-text:    var(--ruby-600);
+  --brand-deep:    var(--ruby-700);
+  --brand-tint:    var(--ruby-50);
+  --brand-tint-2:  var(--ruby-100);
+  --on-brand:      #FFFFFF;
+
+  /* دور «التمييز» — الهايلايتر الأصفر */
+  --lux:           var(--gold-400);
+  --lux-text:      var(--gold-600);
+  --lux-tint:      var(--gold-50);
+  --lux-line:      rgba(29, 11, 21, 0.36);
+  --on-lux:        var(--ink-950);
+  --sun:           var(--gold-400);
+  --leaf:          var(--emerald);
+
+  --success:       var(--emerald);
+  --success-text:  var(--emerald-deep);
+  --success-tint:  #DDF4E6;
+  --warn:          var(--amber);
+  --warn-text:     var(--amber-deep);
+  --warn-tint:     #FDEBC8;
+  --danger:        var(--ruby-500);
+  --danger-text:   var(--ruby-600);
+  --danger-tint:   var(--ruby-50);
+  --info:          var(--teal);
+  --info-text:     var(--teal-deep);
+  --info-tint:     #D9F1F3;
+
+  /* ═══ 7) الطباعة المسطّحة ═════════════════════════════════ */
+  /* لا تدرّجات. الأسماء القديمة باقية لكن بقيم مسطّحة حتى لا ينكسر
+     شيء، وكل ما كان «بريقًا» صار فراغًا. */
+  --grad-noir:  var(--ink-950);
+  --grad-ruby:  var(--ruby-500);
+  --grad-lux:   var(--gold-400);
+  --grad-dawn:  var(--paper);
+  --grad-sheen: linear-gradient(transparent, transparent);
+
+  /* ملمس الورق: نقاطٌ دقيقة كحبيبات الورق الصحفي. يُرسم مرة ويُبلَّط */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .27 0 0 0 0 .12 0 0 0 .5 -.16'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-opacity: .55;
+
+  /* مظلّة المحلّ: شرائط أحمر وكريمي */
+  --awning-a: var(--ruby-500);
+  --awning-b: var(--card);
+  --awning-w: 26px;
+
+  /* ═══ 8) الخطوط ═════════════════════════════════════════════ */
+  /* Kufam: كوفيّ مستدير الأطراف بحضور لافتة المحل — للعناوين والأزرار.
+     عريف رقعة: خط الرقعة الذي تُكتب به ملاحظات المحلات — لليد فقط.
+     Tajawal: نصٌّ هادئ مقروء. Anton: أرقام اللافتات والأسعار فقط. */
+  --font-display: 'Kufam', 'Tajawal', system-ui, sans-serif;
+  --font-body:    'Tajawal', 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-hand:    'Aref Ruqaa', 'Kufam', serif;
+  --font-num:     'Tajawal', 'Kufam', sans-serif;
+  --font-price:   'Anton', 'Kufam', 'Tajawal', sans-serif;
+  --font-mono:    'Courier Prime', 'DM Mono', ui-monospace, monospace;
+
+  /* سلّم أحجام بنسبة 1.25 — العناوين تحتاج حضور اللافتات */
+  --t-2xs:  0.7rem;
+  --t-xs:   0.8rem;
+  --t-sm:   0.9rem;
+  --t-base: 1.02rem;
+  --t-md:   1.2rem;
+  --t-lg:   1.5rem;
+  --t-xl:   1.95rem;
+  --t-2xl:  2.55rem;
+  --t-3xl:  3.3rem;
+  --t-4xl:  4.4rem;
+  --t-5xl:  6.2rem;
+
+  --lh-tight: 1.15;
+  --lh-snug:  1.4;
+  --lh-body:  1.8;
+
+  /* الحروف العربية متّصلة: لا تباعد موجب أبدًا، فيكسر الوصل. */
+  --tr-display: 0;
+  --tr-tight:   0;
+  --tr-wide:    0.04em;   /* للّاتينية فقط */
+  --tr-caps:    0.1em;    /* للّاتينية فقط */
+
+  /* ═══ 9) المسافات (وحدة 4px) ════════════════════════════════ */
+  --s-1: 0.25rem;  --s-2: 0.5rem;   --s-3: 0.75rem;  --s-4: 1rem;
+  --s-5: 1.5rem;   --s-6: 2rem;     --s-7: 3rem;     --s-8: 4rem;
+  --s-9: 6rem;     --s-10: 8rem;    --s-11: 11rem;
+
+  /* ═══ 10) الأشكال ═══════════════════════════════════════════ */
+  /* الأوراق المطبوعة حوافّها شبه حادّة؛ الكبسولة للرقائق الصغيرة وحدها */
+  --r-xs:   3px;
+  --r-sm:   5px;
+  --r-md:   8px;
+  --r-lg:   12px;
+  --r-xl:   18px;
+  --r-2xl:  28px;
+  --r-pill: 999px;
+
+  --bw:      2px;      /* سُمك حدّ الحبر */
+  --bw-thin: 1.5px;
+
+  /* ═══ 11) الارتفاع والظلال ══════════════════════════════════ */
+  /* الظلال الناعمة (قديمة) باقية للنوافذ والقوائم المنسدلة، لكن
+     بلون حبر دافئ لا رمادي. */
+  --shadow-xs: 0 1px 2px rgba(29, 11, 21, 0.10);
+  --shadow-sm: 0 1px 2px rgba(29, 11, 21, 0.08), 0 4px 10px -4px rgba(29, 11, 21, 0.16);
+  --shadow-md: 0 2px 4px rgba(29, 11, 21, 0.08), 0 14px 28px -14px rgba(29, 11, 21, 0.30);
+  --shadow-lg: 0 4px 8px rgba(29, 11, 21, 0.10), 0 28px 56px -26px rgba(29, 11, 21, 0.42);
+  --shadow-xl: 0 8px 16px rgba(29, 11, 21, 0.12), 0 48px 88px -38px rgba(29, 11, 21, 0.52);
+
+  /* توقيعنا: ظلٌّ صلب مُزاح للأسفل واليسار (اتجاه القراءة العربي) */
+  --hard-xs: -1px 1px 0 var(--rule);
+  --hard-sm: -2px 2px 0 var(--rule);
+  --hard:    -4px 4px 0 var(--rule);
+  --hard-lg: -6px 6px 0 var(--rule);
+  --hard-xl: -9px 9px 0 var(--rule);
+  /* ظلُّ الملصق: صغير وناعم كملصق على ورقة */
+  --shadow-sticker: 0 1px 1px rgba(29, 11, 21, 0.25), 1px 3px 6px -1px rgba(29, 11, 21, 0.28);
+
+  --shadow-brand: -4px 4px 0 var(--ruby-800);
+  --shadow-lux:   -4px 4px 0 var(--gold-600);
+  --shadow-inner: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+  /* حلقة تركيز مرئية بوضوح: فجوة ورقية ثم حبر */
+  --ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--rule);
+
+  /* ═══ 12) الحركة ════════════════════════════════════════════ */
+  --ease:       cubic-bezier(0.32, 0.72, 0.24, 1);
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-pop:   cubic-bezier(0.34, 1.46, 0.48, 1);
+  /* ختم يُطبَع: يهبط أكبر قليلًا ثم يستقر */
+  --ease-stamp: cubic-bezier(0.2, 1.5, 0.4, 1);
+  --dur-fast:  140ms;
+  --dur-mid:   240ms;
+  --dur-slow:  440ms;
+  --dur-lazy:  720ms;
+
+  /* ═══ 13) القياسات ══════════════════════════════════════════ */
+  --container:        1320px;
+  --container-wide:   1560px;
+  --container-narrow: 800px;
+  --header-h:         76px;
+  --z-header: 100;
+  --z-drawer: 200;
+  --z-modal:  300;
+  --z-toast:  400;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   الوضع الليلي — «سوق الليل».
+   لا قلبَ ألوان: الورق يصير خمريًا داكنًا، والحبر كريميًا، فتبقى
+   الحدود والظلال والأختام كما هي لكنّها مطبوعة بالمقلوب.
+   ═══════════════════════════════════════════════════════════════ */
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --paper:      #1B1216;
+  --paper-warm: #140C10;
+  --paper-deep: #0E0709;
+  --card:       #2A1B22;
+  --kraft:      #8A6A40;
+  --kraft-dark: #6B4F2B;
+
+  --bg:          var(--paper);
+  --bg-raised:   var(--card);
+  --bg-sunken:   var(--paper-warm);
+  --bg-inverse:  var(--ivory);
+  --bg-overlay:  rgba(6, 2, 4, 0.76);
+
+  --text:        #FAEFD8;
+  --text-soft:   #E8D6BB;
+  --text-muted:  #BDA78E;
+  --text-faint:  #95816C;
+  --text-inverse: var(--ink-950);
+
+  --line:        rgba(250, 239, 216, 0.22);
+  --line-soft:   rgba(250, 239, 216, 0.10);
+  --line-strong: rgba(250, 239, 216, 0.46);
+
+  --rule:        #F3E3C3;
+  --fill-ink:    #F3E3C3;
+  --on-fill-ink: var(--ink-950);
+
+  --brand:       #DD2D48;   /* أبيض فوقه 4.6:1 — الأفتح منه كان 4.3 */
+  --brand-hover: #C92440;
+  --brand-text:  #FF8F99;
+  --brand-deep:  #D5233F;
+  --brand-tint:  rgba(229, 49, 75, 0.18);
+  --brand-tint-2: rgba(229, 49, 75, 0.30);
+
+  --lux:         var(--gold-400);
+  --lux-text:    var(--gold-300);
+  --lux-tint:    rgba(255, 197, 51, 0.14);
+  --lux-line:    rgba(243, 227, 195, 0.40);
+
+  --success-tint: rgba(31, 162, 91, 0.20);
+  --success-text: #56E09A;
+  --warn-tint:    rgba(245, 165, 36, 0.18);
+  --warn-text:    #FFC766;
+  --danger:       #DD2D48;
+  --danger-text:  #FF8F99;
+  --danger-tint:  rgba(229, 49, 75, 0.18);
+  --info-tint:    rgba(23, 168, 182, 0.18);
+  --info-text:    #5FD9E4;
+
+  --grad-noir:  var(--paper-deep);
+  --grad-dawn:  var(--paper);
+
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .9 0 0 0 0 .75 0 0 0 .5 -.2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-opacity: .35;
+
+  --awning-b: #E9D8B6;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.55), 0 4px 10px -4px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.5), 0 14px 32px -16px rgba(0, 0, 0, 0.8);
+  --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.55), 0 32px 64px -28px rgba(0, 0, 0, 0.85);
+  --shadow-xl: 0 8px 16px rgba(0, 0, 0, 0.6), 0 56px 96px -40px rgba(0, 0, 0, 0.9);
+  --shadow-sticker: 0 1px 1px rgba(0, 0, 0, 0.6), 1px 3px 7px -1px rgba(0, 0, 0, 0.7);
+  --shadow-brand: -4px 4px 0 #7A0E22;
+  --shadow-lux:   -4px 4px 0 #8A6200;
+  --shadow-inner: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  --ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--rule);
+}
+
+/* من يفضّل تقليل الحركة يحصل على واجهة ساكنة تمامًا */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

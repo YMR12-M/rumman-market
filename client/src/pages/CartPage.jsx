@@ -106,87 +106,110 @@ export default function CartPage() {
           </div>
         </div>
 
-        {/* ── ملخّص الطلب ─────────────────────────────────── */}
+        {/* ── ملخّص الطلب: إيصال حراري ────────────────────── */}
         <aside className="summary">
-          <div className="panel">
-            <h3 style={{ fontSize: 'var(--t-md)', marginBottom: 'var(--s-4)' }}>ملخّص الطلب</h3>
-
+          <div className="panel" style={{ marginBottom: 'var(--s-5)', padding: 'var(--s-4) var(--s-5)' }}>
             <FreeShippingBar totals={totals} />
-
-            <div className="summary__row">
-              <span>المجموع الفرعي</span>
-              <span className="numeral">{money(totals.subtotal)}</span>
-            </div>
-
-            {totals.discount_total > 0 && (
-              <div className="summary__row summary__row--discount">
-                <span>خصم {cart.coupon?.code}</span>
-                <span className="numeral">−{money(totals.discount_total)}</span>
-              </div>
-            )}
-
-            <div className="summary__row">
-              <span>التوصيل</span>
-              <span className="numeral">{totals.delivery_fee > 0 ? money(totals.delivery_fee) : 'مجاني'}</span>
-            </div>
-
-            {totals.tax_total > 0 && (
-              <div className="summary__row">
-                <span>ضريبة القيمة المضافة</span>
-                <span className="numeral">{money(totals.tax_total)}</span>
-              </div>
-            )}
-
-            <div className="summary__row summary__row--total">
-              <span>الإجمالي</span>
-              <span className="numeral">{money(totals.grand_total)}</span>
-            </div>
-
-            {/* الكوبون */}
-            {isAuthenticated ? (
-              cart.coupon ? (
-                <div className="chip" style={{ marginTop: 'var(--s-4)' }}>
-                  <IconTag size={13} /> {cart.coupon.title_ar}
-                  <button type="button" onClick={removeCoupon} aria-label="إزالة الكود"><IconClose size={12} /></button>
-                </div>
-              ) : (
-                <form onSubmit={submitCoupon} style={{ display: 'flex', gap: 'var(--s-2)', marginTop: 'var(--s-4)' }}>
-                  <input
-                    className="input"
-                    value={code}
-                    onChange={(event) => setCode(event.target.value.toUpperCase())}
-                    placeholder="كود الخصم"
-                    aria-label="كود الخصم"
-                  />
-                  <button type="submit" className="btn btn--outline" disabled={applying}>تطبيق</button>
-                </form>
-              )
-            ) : (
-              <p className="muted" style={{ fontSize: 'var(--t-xs)', marginTop: 'var(--s-4)' }}>
-                سجّل الدخول لاستخدام أكواد الخصم ونقاط الولاء.
-              </p>
-            )}
-
-            {!totals.meets_minimum && (
-              <p style={{ fontSize: 'var(--t-xs)', color: 'var(--danger)', marginTop: 'var(--s-3)' }}>
-                الحد الأدنى للطلب في هذا الفرع {money(totals.minimum_required)}.
-              </p>
-            )}
-
-            <button
-              type="button"
-              className="btn btn--primary btn--block btn--lg"
-              style={{ marginTop: 'var(--s-4)' }}
-              disabled={!canCheckout}
-              onClick={() => navigate(isAuthenticated ? '/checkout' : '/login?next=/checkout')}
-            >
-              {isAuthenticated ? 'متابعة إلى الدفع' : 'سجّل الدخول لإتمام الطلب'}
-            </button>
-
-            <Link to="/shop" className="btn btn--ghost btn--block" style={{ marginTop: 'var(--s-2)' }}>
-              متابعة التسوّق
-            </Link>
           </div>
+
+          <div className="receipt">
+            <div className="receipt__paper">
+              <div className="receipt__title">رُمّان</div>
+              <div className="receipt__sub">{branch?.name_ar} · مراجعة الطلب</div>
+              <hr />
+
+              {cart.items.slice(0, 8).map((item) => (
+                <div className="leader" key={item.product_id}>
+                  <span>{item.name_ar} × {item.quantity}</span>
+                  <span className="numeral">{money(item.line_total).replace(' ج.م', '')}</span>
+                </div>
+              ))}
+              {cart.items.length > 8 && (
+                <div className="muted" style={{ fontSize: 'var(--t-xs)', marginTop: 4 }}>
+                  و{cart.items.length - 8} أصناف أخرى…
+                </div>
+              )}
+              <hr />
+
+              <div className="leader">
+                <span>المجموع الفرعي</span>
+                <span className="numeral">{money(totals.subtotal)}</span>
+              </div>
+
+              {totals.discount_total > 0 && (
+                <div className="leader">
+                  <span>خصم {cart.coupon?.code}</span>
+                  <span className="numeral">−{money(totals.discount_total)}</span>
+                </div>
+              )}
+
+              <div className="leader">
+                <span>التوصيل</span>
+                <span className="numeral">{totals.delivery_fee > 0 ? money(totals.delivery_fee) : 'مجاني'}</span>
+              </div>
+
+              {totals.tax_total > 0 && (
+                <div className="leader">
+                  <span>ضريبة القيمة المضافة</span>
+                  <span className="numeral">{money(totals.tax_total)}</span>
+                </div>
+              )}
+
+              <hr />
+              <div className="leader leader--total">
+                <span>الإجمالي</span>
+                <span>{money(totals.grand_total).replace(' ج.م', '')} <small style={{ fontFamily: 'var(--font-display)', fontSize: '0.9rem' }}>ج.م</small></span>
+              </div>
+
+              {/* الكوبون */}
+              {isAuthenticated ? (
+                cart.coupon ? (
+                  <div className="chip" style={{ marginTop: 'var(--s-4)' }}>
+                    <IconTag size={13} /> {cart.coupon.title_ar}
+                    <button type="button" onClick={removeCoupon} aria-label="إزالة الكود"><IconClose size={12} /></button>
+                  </div>
+                ) : (
+                  <form onSubmit={submitCoupon} style={{ display: 'flex', gap: 'var(--s-2)', marginTop: 'var(--s-4)' }}>
+                    <input
+                      className="input"
+                      value={code}
+                      onChange={(event) => setCode(event.target.value.toUpperCase())}
+                      placeholder="كود الخصم"
+                      aria-label="كود الخصم"
+                    />
+                    <button type="submit" className="btn btn--outline btn--sm" disabled={applying}>تطبيق</button>
+                  </form>
+                )
+              ) : (
+                <p className="muted" style={{ fontSize: 'var(--t-xs)', marginTop: 'var(--s-4)' }}>
+                  سجّل الدخول لاستخدام أكواد الخصم ونقاط الولاء.
+                </p>
+              )}
+
+              {!totals.meets_minimum && (
+                <p style={{ fontSize: 'var(--t-xs)', color: 'var(--danger-text)', marginTop: 'var(--s-3)', fontWeight: 700 }}>
+                  الحد الأدنى للطلب في هذا الفرع {money(totals.minimum_required)}.
+                </p>
+              )}
+
+              <div className="receipt__thanks">شكرًا لزيارتكم</div>
+              <div className="barcode" aria-hidden="true" />
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className="btn btn--primary btn--block btn--lg"
+            style={{ marginTop: 'var(--s-6)' }}
+            disabled={!canCheckout}
+            onClick={() => navigate(isAuthenticated ? '/checkout' : '/login?next=/checkout')}
+          >
+            {isAuthenticated ? 'متابعة إلى الدفع' : 'سجّل الدخول لإتمام الطلب'}
+          </button>
+
+          <Link to="/shop" className="btn btn--ghost btn--block" style={{ marginTop: 'var(--s-2)' }}>
+            متابعة التسوّق
+          </Link>
         </aside>
       </div>
 

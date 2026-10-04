@@ -1,34 +1,47 @@
 import { Link } from 'react-router-dom';
-import { BrandMark } from '@/lib/motifs.jsx';
+import { Fruit } from '@/lib/art.jsx';
 import { IconCheck } from '@/lib/icons.jsx';
 import { HOUSE_LABEL_POINTS } from '@/data/content.js';
 
-/** قصّة العلامة الخاصة — لوحة داكنة منقّطة + اقتباس + نقاط */
+/**
+ * قصّة العلامة الخاصة.
+ * على اليمين لوح كرافت عليه ملصق عبوة مثبّت بشريط لاصق (هكذا تبدو
+ * علامتنا على الرفّ)، وعلى اليسار الاقتباس بخط اليد ونقاط الوعد.
+ */
 export default function BrandStory() {
   return (
     <div className="container story">
       <div className="story__panel reveal">
-        <BrandMark size={190} seedColor="var(--gold-400)" />
+        <span className="tape" style={{ insetBlockStart: 16, insetInlineStart: 22, '--tape-tilt': '-8deg' }} />
+        <span className="tape" style={{ insetBlockEnd: 18, insetInlineEnd: 22, '--tape-tilt': '-5deg' }} />
+
+        <div className="story__label">
+          <Fruit size={74} />
+          <div className="story__label-title">مختارات رُمّان</div>
+          <div className="story__label-hand">العلامة الخاصة</div>
+          <div className="story__label-rule" />
+          <div className="barcode" aria-hidden="true" />
+        </div>
       </div>
 
       <div className="reveal" data-delay="2">
-        <span className="eyebrow eyebrow--saffron">مختارات رُمّان</span>
+        <span className="eyebrow">مختارات رُمّان</span>
         <p className="story__quote">
-          «حين لا نجد المنتج بالجودة التي نريدها، نصنعه بأنفسنا.
+          «حين لا نجد المنتج بالجودة التي نريدها، <span className="hl">نصنعه بأنفسنا.</span>
           مكوّن واحد، مصدر واحد، وجودة لا تتغيّر بين عبوة وأخرى.»
         </p>
         <p className="story__sig">— فريق المشتريات، رُمّان</p>
 
-        <ul style={{ marginTop: 'var(--s-5)', display: 'grid', gap: 'var(--s-3)' }}>
+        <ul className="story__checks">
           {HOUSE_LABEL_POINTS.map((line) => (
-            <li key={line} style={{ display: 'flex', gap: 'var(--s-3)', fontSize: 'var(--t-sm)' }}>
-              <IconCheck size={18} style={{ color: 'var(--emerald)', flexShrink: 0, marginTop: 3 }} />
+            <li key={line}>
+              <span className="story__tick"><IconCheck size={14} /></span>
               {line}
             </li>
           ))}
         </ul>
 
-        <Link to="/about" className="btn btn--dark" style={{ marginTop: 'var(--s-5)' }}>
+        <Link to="/about" className="btn btn--dark">
           اقرأ قصّتنا كاملة
         </Link>
       </div>

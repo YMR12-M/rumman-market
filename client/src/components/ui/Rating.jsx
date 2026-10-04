@@ -1,17 +1,19 @@
-import { IconStar } from '@/lib/icons.jsx';
+import { Aril } from '@/lib/art.jsx';
 
-/** نجوم التقييم — تُقرّب لأقرب نصف نجمة بصريًا (نملأ عند ≥ 0.5) */
+/**
+ * تقييم بحبّات الرمّان بدل النجوم — خمس حبّات تُملأ بالأحمر.
+ * تُقرَّب لأقرب نصف حبّة بصريًا (نملأ عند ≥ 0.5).
+ */
 export default function Rating({ value = 0, count, size = 14, showValue = true }) {
   const score = Number(value) || 0;
 
   return (
     <span className="rating" title={`${score} من 5`}>
-      {[1, 2, 3, 4, 5].map((star) => (
-        <IconStar
-          key={star}
+      {[1, 2, 3, 4, 5].map((seed) => (
+        <Aril
+          key={seed}
           size={size}
-          filled={score >= star - 0.5}
-          className={score >= star - 0.5 ? 'rating__star' : 'rating__star rating__star--empty'}
+          className={score >= seed - 0.5 ? 'rating__star' : 'rating__star rating__star--empty'}
         />
       ))}
       {showValue && (

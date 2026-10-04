@@ -1,0 +1,298 @@
+/* ═══════════════════════════════════════════════════════════════════
+   الهيكل — الشريط العلوي، شريط التبويبات، جسم الشاشة، شريط الإجراء
+
+   الأشرطة ثابتة (fixed) لا لاصقة (sticky) عن قصد: على iOS ينطوي شريط
+   العنوان في المتصفّح عند التمرير، والشريط اللاصق ينجرّ مع تغيّر حجم
+   النافذة الناتج عن ذلك.
+
+   وهي ورقٌ مصمت بحدّ حبر (لا زجاج): كأنها شرائط مطبوعة مثبّتة على الشاشة.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── الشريط العلوي ─────────────────────────────────────────────── */
+
+.appbar {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: var(--z-appbar);
+  padding-block-start: var(--safe-top);
+  background-color: var(--bg);
+  background-image: var(--grain);
+  background-size: 200px 200px;
+  border-block-end: var(--bw) solid var(--rule);
+  transition: box-shadow var(--dur-mid) var(--ease);
+}
+
+/* حين يمرّ تحته محتوى يرتفع بظلّ صلب خفيف */
+.appbar.is-condensed { box-shadow: 0 3px 0 rgba(29, 11, 21, 0.16); }
+
+.appbar__row {
+  height: var(--appbar-h);
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding-inline: var(--s-2);
+}
+
+.appbar__lead,
+.appbar__trail {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.appbar__heading {
+  flex: 1;
+  min-width: 0;
+  padding-inline: var(--s-2);
+}
+
+.appbar__title {
+  font-size: var(--t-md);
+  font-weight: 900;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.appbar__subtitle {
+  font-size: var(--t-2xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: var(--lh-snug);
+}
+
+/* علامة البراند في شريط الشاشة الرئيسية */
+.appbar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.appbar__brand-name {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+/* مظلّة تتدلّى تحت الشريط العلوي في الرئيسية */
+.appbar-awning {
+  position: fixed;
+  inset-block-start: calc(var(--appbar-h) + var(--safe-top) + 2px);
+  inset-inline: 0;
+  z-index: calc(var(--z-appbar) - 1);
+  pointer-events: none;
+}
+
+.appbar-awning .awning { --aw: 16px; }
+
+/* ── شريط التبويبات ────────────────────────────────────────────── */
+
+.tabbar {
+  position: fixed;
+  inset-block-end: 0;
+  inset-inline: 0;
+  z-index: var(--z-tabbar);
+  height: var(--tabbar-space);
+  padding-block-end: var(--safe-bottom);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  background-color: var(--bg-raised);
+  border-block-start: var(--bw) solid var(--rule);
+}
+
+.tab {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: var(--tabbar-h);
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: var(--t-2xs);
+  font-weight: 700;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.tab.is-active { color: var(--text); font-weight: 900; }
+
+/* التبويب النشط: ملصق أصفر بحدّ حبر خلف الأيقونة */
+.tab__icon-wrap {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 30px;
+  border: var(--bw-thin) solid transparent;
+  border-radius: var(--r-md);
+  transition: background-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease-pop);
+}
+
+.tab.is-active .tab__icon-wrap {
+  background: var(--gold-400);
+  color: var(--ink-950);
+  border-color: var(--ink-950);
+  box-shadow: -2px 2px 0 var(--ink-950);
+  transform: translateY(-1px);
+}
+
+.tab__badge {
+  position: absolute;
+  inset-block-start: -8px;
+  inset-inline-end: -4px;
+  min-width: 19px;
+  height: 19px;
+  padding-inline: 5px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-pill);
+  background: var(--brand);
+  color: var(--on-brand);
+  border: var(--bw-thin) solid var(--ink-950);
+  font-family: var(--font-price);
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+/* ── جسم الشاشة ────────────────────────────────────────────────── */
+
+.screen {
+  padding-block-start: calc(var(--appbar-h) + var(--safe-top) + var(--s-3));
+  padding-block-end: calc(var(--tabbar-space) + var(--s-6));
+  padding-inline: var(--gutter);
+  min-height: 100dvh;
+}
+
+/* الرئيسية: تُترك مساحة للمظلّة تحت الشريط */
+.screen--awning { padding-block-start: calc(var(--appbar-h) + var(--safe-top) + var(--s-6)); }
+
+/* شاشة مكدّسة فوق التبويبات (منتج، دفع، بحث…) — لا شريط تبويبات تحتها */
+.screen--stack {
+  padding-block-end: calc(var(--safe-bottom) + var(--s-6));
+}
+
+/* شاشة لها شريط إجراء ثابت في أسفلها */
+.screen--with-actionbar {
+  padding-block-end: calc(var(--tabbar-space) + var(--actionbar-h) + var(--s-5));
+}
+
+.screen--stack.screen--with-actionbar {
+  padding-block-end: calc(var(--safe-bottom) + var(--actionbar-h) + var(--s-5));
+}
+
+/* شاشة بلا شريط علوي (الدخول وما يشبهه) */
+.screen--bare {
+  padding-block-start: calc(var(--safe-top) + var(--s-4));
+}
+
+/* ── شريط الإجراء الثابت ───────────────────────────────────────── */
+
+.actionbar {
+  position: fixed;
+  inset-inline: 0;
+  inset-block-end: 0;
+  z-index: var(--z-actionbar);
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-height: var(--actionbar-h);
+  padding: var(--s-3) var(--gutter) calc(var(--s-3) + var(--safe-bottom));
+  background-color: var(--bg-raised);
+  border-block-start: var(--bw) solid var(--rule);
+}
+
+/* فوق شريط التبويبات حين تكون الشاشة داخل الهيكل */
+.actionbar--above-tabs {
+  inset-block-end: var(--tabbar-space);
+  padding-block-end: var(--s-3);
+}
+
+.actionbar__meta {
+  display: grid;
+  line-height: var(--lh-snug);
+}
+
+.actionbar__meta small {
+  font-size: var(--t-2xs);
+  color: var(--text-muted);
+}
+
+/* ── اسحب للتحديث ──────────────────────────────────────────────── */
+
+.ptr {
+  position: fixed;
+  inset-block-start: calc(var(--appbar-h) + var(--safe-top) - var(--s-4));
+  inset-inline: 0;
+  z-index: calc(var(--z-appbar) - 1);
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.ptr__dial {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-pill);
+  background: var(--bg-raised);
+  color: var(--text-muted);
+  border: var(--bw) solid var(--rule);
+  box-shadow: var(--hard-sm);
+  transition: color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+}
+
+.ptr__dial.is-armed { color: var(--ink-950); background: var(--gold-400); }
+
+/* ── تنبيه الاتصال ─────────────────────────────────────────────── */
+
+.conn-banner {
+  position: fixed;
+  inset-inline: var(--gutter);
+  inset-block-start: calc(var(--appbar-h) + var(--safe-top) + var(--s-2));
+  z-index: var(--z-appbar);
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-md);
+  background: var(--grad-noir);
+  color: var(--ivory);
+  border: var(--bw-thin) solid var(--rule);
+  font-size: var(--t-xs);
+  font-weight: 700;
+  box-shadow: var(--hard);
+}
+
+/* ── مؤشّر الانتظار ────────────────────────────────────────────── */
+
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--r-pill);
+  border: 2.5px solid currentColor;
+  border-block-start-color: transparent;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { rotate: 360deg; } }
+
+.route-fallback {
+  min-height: 70dvh;
+  display: grid;
+  place-items: center;
+}
+
+.route-fallback svg { animation: bob 1.3s var(--ease-pop) infinite; }
+
+@keyframes bob {
+  0%, 100% { translate: 0 0; rotate: -4deg; }
+  50% { translate: 0 -10px; rotate: 4deg; }
+}

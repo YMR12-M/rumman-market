@@ -48,22 +48,24 @@ export default function ContactPage() {
 
   return (
     <>
-      <div className="cat-hero">
-        <div className="container">
-          <span className="eyebrow">خدمة العملاء</span>
-          <h1>نردّ على كل رسالة</h1>
-          <p className="lede" style={{ marginTop: 'var(--s-3)' }}>
-            متوسّط زمن الرد لدينا أقل من أربع ساعات في أيام العمل. وإن كان الأمر عاجلًا، اتصل بنا مباشرة.
-          </p>
+      <header className="page-hero">
+        <div className="container page-hero__inner page-hero__inner--single">
+          <div>
+            <span className="eyebrow">خدمة العملاء</span>
+            <h1>نردّ على كل رسالة</h1>
+            <p className="lede">
+              متوسّط زمن الرد لدينا أقل من أربع ساعات في أيام العمل. وإن كان الأمر عاجلًا، اتصل بنا مباشرة.
+            </p>
+          </div>
         </div>
-      </div>
+      </header>
 
       <div className="container section--tight">
         <div className="checkout-grid">
           <div className="panel">
             {sent ? (
               <div className="empty">
-                <IconCheck size={44} style={{ color: 'var(--gold-400)', margin: '0 auto var(--s-4)' }} />
+                <IconCheck size={44} style={{ color: 'var(--emerald)', margin: '0 auto var(--s-4)' }} />
                 <h3>وصلتنا رسالتك</h3>
                 <p>سنرد على <strong>{form.email}</strong> خلال يوم عمل واحد كحد أقصى.</p>
                 <button type="button" className="btn btn--outline" style={{ marginTop: 'var(--s-4)' }} onClick={() => { setSent(false); setForm({ ...form, message: '' }); }}>

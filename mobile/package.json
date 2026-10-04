@@ -1,0 +1,23 @@
+{
+  "name": "@rumman/mobile",
+  "version": "1.0.0",
+  "private": true,
+  "description": "رُمّان — تطبيق الجوّال (واجهة مستقلّة فوق الـ API نفسه)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "check:shared": "node scripts/check-shared.mjs",
+    "prebuild": "node scripts/check-shared.mjs",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.18.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.0.7"
+  }
+}

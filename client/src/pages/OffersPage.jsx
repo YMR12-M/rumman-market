@@ -3,7 +3,8 @@ import SectionHead from '@/components/brand/SectionHead.jsx';
 import { ProductGridSkeleton } from '@/components/ui/Skeleton.jsx';
 import EmptyState from '@/components/ui/EmptyState.jsx';
 import { IconTag, IconCheck } from '@/lib/icons.jsx';
-import { getMotif } from '@/lib/motifs.jsx';
+import PromoStrip from '@/components/home/PromoStrip.jsx';
+import { Burst } from '@/lib/art.jsx';
 import { catalogService } from '@/services/index.js';
 import { useAsync } from '@/hooks/index.js';
 import { useBranch } from '@/context/BranchContext.jsx';
@@ -38,61 +39,52 @@ export default function OffersPage() {
 
   return (
     <>
-      <div className="cat-hero">
-        <div className="container">
-          <span className="eyebrow">عروض فعّالة الآن</span>
-          <h1>خصومات نصنعها، لا أسعار نرفعها ثم نخفضها</h1>
-          <p className="lede" style={{ marginTop: 'var(--s-3)' }}>
-            كل خصم هنا محسوب من السعر الذي نبيع به طوال العام. لا أرقام مشطوبة وهمية.
-          </p>
+      <header className="page-hero page-hero--sun">
+        <div className="container page-hero__inner">
+          <div>
+            <span className="eyebrow">عروض فعّالة الآن</span>
+            <h1>خصومات نصنعها،<br />لا أسعار نرفعها ثم نخفضها</h1>
+            <p className="lede">
+              كل خصم هنا محسوب من السعر الذي نبيع به طوال العام. لا أرقام مشطوبة وهمية.
+            </p>
+          </div>
+          <div className="page-hero__art" aria-hidden="true">
+            <Burst size={210} tone="brand">
+              عروض<b className="burst__word">حقيقية</b>
+            </Burst>
+          </div>
         </div>
-      </div>
+      </header>
 
       <div className="container section--tight">
         {/* أكواد الخصم */}
         <SectionHead eyebrow="أكواد الخصم" title="انسخ الكود واستخدمه عند الدفع" />
 
-        <div className="editorial" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))' }}>
+        <div className="coupons">
           {(coupons.data ?? []).map((coupon) => (
-            <div className="panel" key={coupon.code} style={{ display: 'grid', gap: 'var(--s-3)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--s-2)' }}>
-                <IconTag size={18} style={{ color: 'var(--brand-text)' }} />
-                <strong style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--t-md)' }}>{describe(coupon)}</strong>
+            <div className="coupon reveal" key={coupon.code}>
+              <div className="coupon__main">
+                <div className="coupon__title"><IconTag size={18} /> {describe(coupon)}</div>
+                <p className="muted" style={{ fontSize: 'var(--t-sm)' }}>{coupon.title_ar}</p>
+                {coupon.min_order_amount > 0 && (
+                  <p className="muted" style={{ fontSize: 'var(--t-xs)' }}>
+                    الحد الأدنى للطلب {money(coupon.min_order_amount)}
+                  </p>
+                )}
               </div>
-
-              <p className="muted" style={{ fontSize: 'var(--t-sm)' }}>{coupon.title_ar}</p>
-
-              {coupon.min_order_amount > 0 && (
-                <p className="muted" style={{ fontSize: 'var(--t-xs)' }}>
-                  الحد الأدنى للطلب {money(coupon.min_order_amount)}
-                </p>
-              )}
-
-              <button
-                type="button"
-                className="btn btn--outline"
-                onClick={() => copy(coupon.code)}
-                style={{ fontFamily: 'var(--font-num)', letterSpacing: '0.18em', fontSize: 'var(--t-base)' }}
-              >
-                {coupon.code}
-              </button>
+              <div className="coupon__stub">
+                <button type="button" className="coupon__code" onClick={() => copy(coupon.code)} title="انسخ الكود">
+                  {coupon.code}
+                </button>
+              </div>
             </div>
           ))}
         </div>
 
         {/* الحملات التحريرية */}
         {promotions.data?.length > 0 && (
-          <div className="editorial" style={{ marginTop: 'var(--s-7)' }}>
-            {promotions.data.map((promo) => {
-              const Motif = getMotif(promo.category_motif || 'wheat');
-              return (
-                <article className="promo-card" key={promo.slug} style={{ background: promo.accent, minHeight: 200 }}>
-                  <Motif className="promo-card__motif" />
-                  <h3>{promo.title_ar}</h3>
-                  <p>{promo.subtitle_ar}</p>
-                </article>
-              );
-            })}
+          <div style={{ marginTop: 'var(--s-8)' }}>
+            <PromoStrip promotions={promotions.data} limit={6} />
           </div>
         )}
 
@@ -130,7 +122,7 @@ export default function OffersPage() {
               'تنتهي العروض الأسبوعية مساء السبت ما لم يُذكر خلاف ذلك.',
             ].map((line) => (
               <li key={line} style={{ display: 'flex', gap: 'var(--s-2)', fontSize: 'var(--t-sm)' }}>
-                <IconCheck size={16} style={{ color: 'var(--gold-400)', flexShrink: 0, marginTop: 4 }} /> {line}
+                <IconCheck size={16} style={{ color: 'var(--emerald)', flexShrink: 0, marginTop: 4 }} /> {line}
               </li>
             ))}
           </ul>

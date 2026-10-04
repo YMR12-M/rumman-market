@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SectionHead from '@/components/brand/SectionHead.jsx';
 import { IconPin, IconClock, IconTruck, IconPhone, IconStore, IconCheck } from '@/lib/icons.jsx';
+import { ART } from '@/lib/art.jsx';
 import { catalogService } from '@/services/index.js';
 import { useAsync } from '@/hooks/index.js';
 import { useBranch } from '@/context/BranchContext.jsx';
@@ -34,24 +35,33 @@ export default function BranchesPage() {
 
   return (
     <>
-      <div className="cat-hero">
-        <div className="container">
-          <span className="eyebrow">أين تجدنا</span>
-          <h1>فروعنا، ومعيار واحد</h1>
-          <p className="lede" style={{ marginTop: 'var(--s-3)' }}>
-            كل فرع له شخصيته وتخصّصه، لكن معايير الاختيار والجودة واحدة في كل رفّ.
-            اختر فرعك لتظهر لك الأسعار والتوفّر الحقيقي فيه.
-          </p>
-          <button type="button" className="btn btn--primary" style={{ marginTop: 'var(--s-5)' }} onClick={locate} disabled={locating}>
-            <IconPin size={16} /> {locating ? 'جارٍ تحديد موقعك…' : 'اعثر على أقرب فرع لي'}
-          </button>
+      <header className="page-hero page-hero--sun">
+        <div className="container page-hero__inner">
+          <div>
+            <span className="eyebrow">أين تجدنا</span>
+            <h1>فروعنا، ومعيار واحد</h1>
+            <p className="lede">
+              كل فرع له شخصيته وتخصّصه، لكن معايير الاختيار والجودة واحدة في كل رفّ.
+              اختر فرعك لتظهر لك الأسعار والتوفّر الحقيقي فيه.
+            </p>
+            <div className="page-hero__actions">
+              <button type="button" className="btn btn--primary btn--lg" onClick={locate} disabled={locating}>
+                <IconPin size={16} /> {locating ? 'جارٍ تحديد موقعك…' : 'اعثر على أقرب فرع لي'}
+              </button>
+            </div>
+          </div>
+          <div className="page-hero__art" aria-hidden="true">
+            <div className="awning awning--lg" style={{ inlineSize: '100%', maxInlineSize: 380, rotate: '-2deg' }} />
+            <ART.basket className="die-cut" style={{ position: 'absolute', inlineSize: 180, blockSize: 180, insetBlockEnd: 0, rotate: '8deg', '--cat-color': 'var(--ruby-500)' }} />
+          </div>
         </div>
-      </div>
+      </header>
 
       <div className="container section--tight">
         <div className="cats" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))' }}>
           {branches.map((branch) => (
             <article key={branch.id} className={`branch-card${branch.id === branchId ? ' is-active' : ''}`}>
+              <span className="branch-card__awning awning awning--sm" aria-hidden="true" />
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 'var(--s-3)' }}>
                 <div>
                   <h3 style={{ fontSize: 'var(--t-md)' }}>{branch.name_ar}</h3>
@@ -60,14 +70,17 @@ export default function BranchesPage() {
                 <span className="branch-card__code">{branch.code}</span>
               </div>
 
+              {typeof branch.is_open_now === 'boolean' && (
+                <span className={`door-sign ${branch.is_open_now ? 'is-open' : 'is-closed'}`}>
+                  {branch.is_open_now ? 'مفتوح الآن' : 'مغلق الآن'}
+                </span>
+              )}
+
               <div className="branch-card__meta">
                 <div><IconPin size={14} /> {branch.address_ar}</div>
                 <div>
                   <IconClock size={14} />
                   {branch.is_24h ? 'مفتوح ٢٤ ساعة' : `${String(branch.opens_at).slice(0, 5)} — ${String(branch.closes_at).slice(0, 5)}`}
-                  <span className={`open-dot open-dot--${branch.is_open_now ? 'open' : 'closed'}`} style={{ marginInlineStart: 8 }}>
-                    {branch.is_open_now ? 'مفتوح الآن' : 'مغلق الآن'}
-                  </span>
                 </div>
                 <div><IconTruck size={14} /> توصيل {money(branch.delivery_fee)} · مجاني فوق {money(branch.free_delivery_over)}</div>
                 <div><IconStore size={14} /> {num(branch.area_sqm)} م² · افتُتح {branch.opened_year}</div>
@@ -76,7 +89,7 @@ export default function BranchesPage() {
               </div>
 
               {expanded === branch.slug && detail.data && (
-                <div style={{ borderTop: '1px solid var(--line-soft)', paddingTop: 'var(--s-3)', fontSize: 'var(--t-sm)' }}>
+                <div style={{ borderTop: '2px dashed var(--line-strong)', paddingTop: 'var(--s-3)', fontSize: 'var(--t-sm)' }}>
                   <strong style={{ display: 'block', marginBottom: 6 }}>مناطق التوصيل</strong>
                   {(detail.data.delivery_zones ?? []).map((zone) => (
                     <div key={zone.id} className="muted" style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--t-xs)', paddingBlock: 3 }}>
