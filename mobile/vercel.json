@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "cd .. && npm ci -w mobile",
+  "buildCommand": "npm run build && node demo/inject.mjs",
+  "outputDirectory": "dist",
+  "headers": [{ "source": "/sw.js", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }],
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
